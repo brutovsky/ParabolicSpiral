@@ -5,17 +5,40 @@
  */
 package parabolicspiral;
 
+import java.awt.Graphics;
+
 /**
  *
  * @author VADIM
  */
 public class PaintGraphPanel extends javax.swing.JPanel {
 
+    private int ny, nx, oyn, oyk, oyx, oxn, oxk, oxy, ly, lx, sw, xln, l2;
+    private float xng, kx, ky, hx, yg, xk;
+
     /**
      * Creates new form PaintGraphPanel
      */
     public PaintGraphPanel() {
         initComponents();
+        ny = 10;// цена делени€  по шкалам
+        ky = (float) 0.5; // коэф шкалы по у
+        kx = (float) 0.5; // коэф шкалы по x
+        oyn = 50; // начальный отступ по y
+        oxn = 50; //начальный отступ по х
+        ly = 100; // длина оси у
+        lx = 100; // длина оси х
+        // по умолчанию в начале на экран выводитс€ график y=x
+        sw = 1; // свич дл€ переключени€ графика функции
+        hx = (float) 0.011;//шаг табул€ции
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+       //rectangle originates at 10,10 and ends at 240,240
+            g.drawRect(10, 10, 240, 240);
+            //filled Rectangle with rounded corners.    
+            g.fillRoundRect(50, 50, 100, 100, 80, 80);
     }
 
     /**
@@ -27,16 +50,9 @@ public class PaintGraphPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setMaximumSize(new java.awt.Dimension(900, 500));
+        setMinimumSize(new java.awt.Dimension(900, 500));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
     }// </editor-fold>//GEN-END:initComponents
 
 

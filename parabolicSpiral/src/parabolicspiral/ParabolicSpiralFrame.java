@@ -21,7 +21,12 @@ public class ParabolicSpiralFrame extends javax.swing.JFrame {
     public ParabolicSpiralFrame() {
         initComponents();
         chooseGraph = new ChooseGraphPanel();
+        paintGraph = new PaintGraphPanel();
+        paintGraph.setSize(900,500);
+        modifyGraph = new GraphModifierPanel();
         this.add(chooseGraph);
+        this.add(paintGraph);
+        this.add(modifyGraph);
     }
 
     /**
@@ -39,6 +44,7 @@ public class ParabolicSpiralFrame extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(900, 650));
         setMinimumSize(new java.awt.Dimension(900, 650));
         setResizable(false);
+        getContentPane().setLayout(new java.awt.FlowLayout());
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

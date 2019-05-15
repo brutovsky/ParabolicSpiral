@@ -27,19 +27,24 @@ public class GraphModifierPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jButton1 = new javax.swing.JButton();
+        drawGraphButton = new javax.swing.JButton();
+
+        setMaximumSize(new java.awt.Dimension(900, 100));
+        setMinimumSize(new java.awt.Dimension(900, 100));
+        setPreferredSize(new java.awt.Dimension(900, 100));
+        setLayout(new java.awt.GridLayout());
+
+        jButton1.setText("jButton1");
+        add(jButton1);
+
+        drawGraphButton.setText("Draw");
+        add(drawGraphButton);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton drawGraphButton;
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
