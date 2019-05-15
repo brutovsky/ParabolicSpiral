@@ -22,7 +22,6 @@ public class ParabolicSpiralFrame extends javax.swing.JFrame {
         initComponents();
         chooseGraph = new ChooseGraphPanel();
         paintGraph = new PaintGraphPanel();
-        paintGraph.setSize(900,500);
         modifyGraph = new GraphModifierPanel();
         this.add(chooseGraph);
         this.add(paintGraph);
