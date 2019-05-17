@@ -5,6 +5,9 @@
  */
 package parabolicspiral;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+
 /**
  *
  * @author VADIM
@@ -14,18 +17,29 @@ public class ParabolicSpiralFrame extends javax.swing.JFrame {
     PaintGraphPanel paintGraph; // class that draws the graph
     ChooseGraphPanel chooseGraph; // class for radioButtons to choose the graph
     GraphModifierPanel modifyGraph; // class for modifying the graph
+    CoordinateSystemModifierPanel coordinateModifier; // class for modifying the coordinate system
 
     /**
      * Creates new form ParabolicSpiralFrame
      */
     public ParabolicSpiralFrame() {
         initComponents();
+        //this.getContentPane().setBackground(Color.WHITE);
         chooseGraph = new ChooseGraphPanel();
         paintGraph = new PaintGraphPanel();
         modifyGraph = new GraphModifierPanel();
+        coordinateModifier = new CoordinateSystemModifierPanel();
+        paintGraph.setBackground(Color.white);
+        add(chooseGraph, BorderLayout.NORTH);
+        add(paintGraph, BorderLayout.CENTER); 
+        add(coordinateModifier, BorderLayout.EAST);
+        add(modifyGraph, BorderLayout.SOUTH);
+        
+        /*
         this.add(chooseGraph);
         this.add(paintGraph);
         this.add(modifyGraph);
+        */
     }
 
     /**
@@ -40,10 +54,10 @@ public class ParabolicSpiralFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Parabolic Spiral Graph");
         setBackground(new java.awt.Color(255, 255, 255));
-        setMaximumSize(new java.awt.Dimension(900, 650));
-        setMinimumSize(new java.awt.Dimension(900, 650));
+        setMaximumSize(new java.awt.Dimension(1200, 650));
+        setMinimumSize(new java.awt.Dimension(1200, 650));
+        setPreferredSize(new java.awt.Dimension(1200, 650));
         setResizable(false);
-        getContentPane().setLayout(new java.awt.FlowLayout());
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

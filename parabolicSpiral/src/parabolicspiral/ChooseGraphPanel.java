@@ -16,6 +16,7 @@ public class ChooseGraphPanel extends javax.swing.JPanel {
      */
     public ChooseGraphPanel() {
         initComponents();
+        this.setSize(900, 25);
     }
 
     /**

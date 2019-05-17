@@ -5,6 +5,7 @@
  */
 package parabolicspiral;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -13,7 +14,7 @@ import java.awt.Graphics;
  */
 public class PaintGraphPanel extends javax.swing.JPanel {
 
-    private int ny, nx, oyn, oyk, oyx, oxn, oxk, oxy, ly, lx, sw, xln, l2;
+    private int segmentation, nx, indent_y , oyk, oyx, indent_x , oxk, oxy, lenght_y, lenght_x, sw, xln, l2;
     private float xng, kx, ky, hx, yg, xk;
 
     /**
@@ -21,24 +22,74 @@ public class PaintGraphPanel extends javax.swing.JPanel {
      */
     public PaintGraphPanel() {
         initComponents();
-        ny = 10;// цена деления  по шкалам
+        segmentation = 20;// цена деления  по шкалам
         ky = (float) 0.5; // коэф шкалы по у
         kx = (float) 0.5; // коэф шкалы по x
-        oyn = 50; // начальный отступ по y
-        oxn = 50; //начальный отступ по х
-        ly = 100; // длина оси у
-        lx = 100; // длина оси х
-        // по умолчанию в начале на экран выводится график y=x
-        sw = 1; // свич для переключения графика функции
+        indent_y = 0; // начальный отступ по y
+        indent_x = 0; //начальный отступ по х
+        lenght_y = 500 - 10; // длина оси у
+        lenght_x = 900 - 10; // длина оси х
+
         hx = (float) 0.011;//шаг табуляции
     }
 
     @Override
     public void paintComponent(Graphics g) {
-       //rectangle originates at 10,10 and ends at 240,240
-            g.drawRect(10, 10, 240, 240);
-            //filled Rectangle with rounded corners.    
-            g.fillRoundRect(50, 50, 100, 100, 80, 80);
+        super.paintComponent(g);
+        //Разбиваем каждую ось на две части для удобства переноса центра координат
+        // Ось Y
+        g.drawLine((int) (lenght_x * kx + indent_x ), indent_y ,
+                (int) (lenght_x * kx + indent_x ), lenght_y + indent_y );
+        // Стрелки
+        g.drawLine((int) (lenght_x * kx + indent_x ), indent_y ,
+                (int) (lenght_x * kx + indent_x ) - 3, indent_y  + 10);
+        g.drawLine((int) (lenght_x * kx + indent_x ), indent_y ,
+                (int) (lenght_x * kx + indent_x ) + 3, indent_y  + 10);
+        // Надпись
+        g.drawString("Y", (int) (lenght_x * kx + indent_x ) - 10, indent_y  + 10);
+        g.drawString("0", (int) (lenght_x * kx + indent_x ) - 10, (int) (lenght_y * ky + indent_y ) + 10);
+        //Деления
+        int l1 = (int) (lenght_y * ky);
+        l2 = lenght_y - l1;
+        int k1 = (int) l1 / segmentation;
+        int k2 = (int) l2 / segmentation;
+        for (int i = 1; i < k1 + 1; i++) {
+            g.drawLine((int) (lenght_x * kx - 2 + indent_x ), l1 - segmentation + indent_y ,
+                   (int) (lenght_x * kx + 2 + indent_x ), l1 - segmentation + indent_y );
+            l1 = l1 - segmentation;
+        }
+        l1 = lenght_y - l2;
+        for (int i = 1; i < k2 + 1; i++) {
+            g.drawLine((int) (lenght_x * kx - 2 + indent_x ), l1 + segmentation + indent_y ,
+                    (int) (lenght_x * kx + 2 + indent_x ), l1 + segmentation + indent_y );
+            l1 = l1 + segmentation;
+        }
+        // Ось Х
+        g.drawLine(indent_x , (int) (lenght_y * ky + indent_y ), lenght_x + indent_x , (int) (lenght_y * ky + indent_y ));
+        g.drawLine(lenght_x + indent_x , (int) (lenght_y * ky + indent_y ), lenght_x + indent_x  - 10,
+                (int) (lenght_y * ky + indent_y ) - 3);
+        g.drawLine(lenght_x + indent_x , (int) (lenght_y * ky + indent_y ), lenght_x + indent_x  - 10,
+                (int) (lenght_y * ky + indent_y ) + 3);
+        // Надпись
+        g.drawString("Х", lenght_x + indent_y  - 10, (int) (lenght_y * ky + indent_y ) - 10);
+        // Деления
+        l1 = (int) (lenght_x * kx);
+        l2 = lenght_x - l1;
+        k1 = (int) l1 / segmentation;
+        k2 = (int) l2 / segmentation;
+        for (int i = 1; i < k1 + 1; i++) {
+            g.drawLine(l1 - segmentation + indent_x , (int) (lenght_y * ky - 2 + indent_y ),
+                    l1 - segmentation + indent_x , (int) (lenght_y * ky + 2 + indent_y ));
+            l1 = l1 - segmentation;
+        }
+        l1 = lenght_x - l2;
+        double xl = l1 / segmentation;
+        double xl1 = l2 / segmentation;
+        for (int i = 1; i < k2 + 1; i++) {
+            g.drawLine(l1 + segmentation + indent_x , (int) (lenght_y * ky - 2 + indent_y ),
+                    l1 + segmentation + indent_x , (int) (lenght_y * ky + 2 + indent_y ));
+            l1 = l1 + segmentation;
+        }
     }
 
     /**
@@ -50,9 +101,12 @@ public class PaintGraphPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         setMaximumSize(new java.awt.Dimension(900, 500));
         setMinimumSize(new java.awt.Dimension(900, 500));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setPreferredSize(new java.awt.Dimension(900, 500));
+        setLayout(new java.awt.GridLayout());
     }// </editor-fold>//GEN-END:initComponents
 
 
