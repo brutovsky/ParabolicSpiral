@@ -33,6 +33,10 @@ public class PaintGraphPanel extends javax.swing.JPanel {
     private int x_range;
     private int y_range;
 
+    ChooseGraphPanel choosePanel;
+    GraphModifierPanel modifyPanel;
+    CoordinateSystemModifierPanel coordinatePanel;
+
     {
         list_x = new ArrayList<>();
         list_y = new ArrayList<>();
@@ -41,8 +45,16 @@ public class PaintGraphPanel extends javax.swing.JPanel {
     /**
      * Creates new form PaintGraphPanel
      */
-    public PaintGraphPanel() {
+    public PaintGraphPanel(ChooseGraphPanel choosePanel, GraphModifierPanel modifyPanel, CoordinateSystemModifierPanel coordinatePanel) {
+        this.choosePanel =choosePanel;
+        this.modifyPanel = modifyPanel;
+        this.coordinatePanel = coordinatePanel;
         initComponents();
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         segmentation = 20;// цена деления  по шкалам
         ky = (float) 0.5; // коэф шкалы по у
         kx = (float) 0.5; // коэф шкалы по x
@@ -54,7 +66,7 @@ public class PaintGraphPanel extends javax.swing.JPanel {
         hx = (float) 0.011;//шаг табуляции
 
         //for graph
-        a = 166;
+        a = Float.parseFloat(modifyPanel.getConstField().getText()) * 100;
         fi_min = 0;
         fi_max = Math.PI * 4;
         precision = 0.1;
@@ -64,11 +76,6 @@ public class PaintGraphPanel extends javax.swing.JPanel {
         div_intend = 15;
         x_range = 450;
         y_range = 250;
-    }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
         // paint Parabolic Spiral graph
         //positive
         drawPositiveGraph(g);

@@ -7,6 +7,7 @@ package parabolicspiral;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,32 +15,31 @@ import java.awt.Color;
  */
 public class ParabolicSpiralFrame extends javax.swing.JFrame {
 
-    PaintGraphPanel paintGraph; // class that draws the graph
-    ChooseGraphPanel chooseGraph; // class for radioButtons to choose the graph
-    GraphModifierPanel modifyGraph; // class for modifying the graph
-    CoordinateSystemModifierPanel coordinateModifier; // class for modifying the coordinate system
+    private PaintGraphPanel paintGraph; // class that draws the graph
+    private ChooseGraphPanel chooseGraph; // class for radioButtons to choose the graph
+    private GraphModifierPanel modifyGraph; // class for modifying the graph
+    private CoordinateSystemModifierPanel coordinateModifier; // class for modifying the coordinate system
 
     /**
      * Creates new form ParabolicSpiralFrame
      */
     public ParabolicSpiralFrame() {
         initComponents();
-        //this.getContentPane().setBackground(Color.WHITE);
         chooseGraph = new ChooseGraphPanel();
-        paintGraph = new PaintGraphPanel();
-        modifyGraph = new GraphModifierPanel();
+        modifyGraph = new GraphModifierPanel(this);
         coordinateModifier = new CoordinateSystemModifierPanel();
+        paintGraph = new PaintGraphPanel(chooseGraph, modifyGraph, coordinateModifier);
         paintGraph.setBackground(Color.white);
         add(chooseGraph, BorderLayout.NORTH);
-        add(paintGraph, BorderLayout.CENTER); 
+        add(paintGraph, BorderLayout.CENTER);
         add(coordinateModifier, BorderLayout.EAST);
         add(modifyGraph, BorderLayout.SOUTH);
-        
+
         /*
         this.add(chooseGraph);
         this.add(paintGraph);
         this.add(modifyGraph);
-        */
+         */
     }
 
     /**
@@ -97,6 +97,9 @@ public class ParabolicSpiralFrame extends javax.swing.JFrame {
         });
     }
 
+    public void repaintGraph() {
+       paintGraph.repaint();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

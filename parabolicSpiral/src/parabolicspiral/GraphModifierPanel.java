@@ -5,10 +5,15 @@
  */
 package parabolicspiral;
 
+import java.text.DecimalFormat;
 import javax.swing.InputVerifier;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.text.DefaultFormatterFactory;
 
 /**
@@ -17,12 +22,15 @@ import javax.swing.text.DefaultFormatterFactory;
  */
 public class GraphModifierPanel extends javax.swing.JPanel {
 
+    ParabolicSpiralFrame frame;
+
     /**
      * Creates new form GraphModifierPanel
      */
-    public GraphModifierPanel() {
+    public GraphModifierPanel(ParabolicSpiralFrame frame) {
         initComponents();
         this.setSize(900, 100);
+        this.frame = frame;
     }
 
     /**
@@ -36,7 +44,7 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         constLabel = new javax.swing.JLabel();
-        constField = new javax.swing.JFormattedTextField();
+        constField = new javax.swing.JTextField();
         fiMinLabel = new javax.swing.JLabel();
         fiMinField = new javax.swing.JFormattedTextField();
         fiMaxLabel = new javax.swing.JLabel();
@@ -59,9 +67,7 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         add(constLabel, gridBagConstraints);
 
-        constField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         constField.setText("2");
-        constField.setMinimumSize(new java.awt.Dimension(50, 22));
         constField.setPreferredSize(new java.awt.Dimension(50, 30));
         add(constField, new java.awt.GridBagConstraints());
 
@@ -115,15 +121,75 @@ public class GraphModifierPanel extends javax.swing.JPanel {
 
         drawGraphButton.setText("Draw");
         drawGraphButton.setPreferredSize(new java.awt.Dimension(300, 100));
+        drawGraphButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                drawGraphButtonMouseReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 5.0;
         add(drawGraphButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void drawGraphButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawGraphButtonMouseReleased
+        frame.repaintGraph();
+    }//GEN-LAST:event_drawGraphButtonMouseReleased
+
+    public JTextField getConstField() {
+        return constField;
+    }
+
+    public JLabel getConstLabel() {
+        return constLabel;
+    }
+
+    public JButton getDrawGraphButton() {
+        return drawGraphButton;
+    }
+
+    public JFormattedTextField getFiMaxField() {
+        return fiMaxField;
+    }
+
+    public JLabel getFiMaxLabel() {
+        return fiMaxLabel;
+    }
+
+    public JFormattedTextField getFiMinField() {
+        return fiMinField;
+    }
+
+    public JLabel getFiMinLabel() {
+        return fiMinLabel;
+    }
+
+    public JLabel getRangeXLabel() {
+        return rangeXLabel;
+    }
+
+    public JSpinner getRangeXSpinner() {
+        return rangeXSpinner;
+    }
+
+    public JLabel getRangeYLabel() {
+        return rangeYLabel;
+    }
+
+    public JSpinner getRangeYSpinner() {
+        return rangeYSpinner;
+    }
+
+    public JFormattedTextField getStepField() {
+        return stepField;
+    }
+
+    public JLabel getStepLabel() {
+        return stepLabel;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFormattedTextField constField;
+    private javax.swing.JTextField constField;
     private javax.swing.JLabel constLabel;
     private javax.swing.JButton drawGraphButton;
     private javax.swing.JFormattedTextField fiMaxField;
