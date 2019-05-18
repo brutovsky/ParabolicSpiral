@@ -54,16 +54,16 @@ public class PaintGraphPanel extends javax.swing.JPanel {
         hx = (float) 0.011;//шаг табул€ции
 
         //for graph
-        a = 200;
+        a = 166;
         fi_min = 0;
         fi_max = Math.PI * 4;
-        precision = 0.01;
+        precision = 0.1;
         list_x = new ArrayList<>();
         list_y = new ArrayList<>();
 
         div_intend = 15;
-        x_range = 60;
-        y_range = 60;
+        x_range = 450;
+        y_range = 250;
     }
 
     @Override
@@ -167,7 +167,6 @@ public class PaintGraphPanel extends javax.swing.JPanel {
             list_x.add(x);
             list_y.add(y);
         }
-
         int[] array_x = new int[list_x.size()];
         for (int i = 0; i < list_x.size(); i++) {
             array_x[i] = list_x.get(i).intValue() + lenght_x / 2;

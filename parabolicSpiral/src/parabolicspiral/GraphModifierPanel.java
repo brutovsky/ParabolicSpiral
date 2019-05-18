@@ -5,7 +5,11 @@
  */
 package parabolicspiral;
 
+import javax.swing.InputVerifier;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.text.DefaultFormatterFactory;
 
 /**
  *
@@ -29,85 +33,108 @@ public class GraphModifierPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         constLabel = new javax.swing.JLabel();
-        constSpinner = new javax.swing.JSpinner();
+        constField = new javax.swing.JFormattedTextField();
         fiMinLabel = new javax.swing.JLabel();
-        fiMinSpinner = new javax.swing.JSpinner();
+        fiMinField = new javax.swing.JFormattedTextField();
         fiMaxLabel = new javax.swing.JLabel();
-        fiMaxSpinner = new javax.swing.JSpinner();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        fiMaxField = new javax.swing.JFormattedTextField();
+        rangeXLabel = new javax.swing.JLabel();
+        rangeXSpinner = new javax.swing.JSpinner();
+        rangeYLabel = new javax.swing.JLabel();
+        rangeYSpinner = new javax.swing.JSpinner();
+        stepLabel = new javax.swing.JLabel();
+        stepField = new javax.swing.JFormattedTextField();
         drawGraphButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(600, 100));
         setMinimumSize(new java.awt.Dimension(600, 100));
-        setPreferredSize(new java.awt.Dimension(600, 100));
+        setPreferredSize(new java.awt.Dimension(1200, 100));
         setLayout(new java.awt.GridBagLayout());
 
         constLabel.setText("const a:");
-        add(constLabel, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.weightx = 1.0;
+        add(constLabel, gridBagConstraints);
 
-        constSpinner.setModel(new javax.swing.SpinnerNumberModel(2, 1, null, 1));
-        add(constSpinner, new java.awt.GridBagConstraints());
+        constField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        constField.setText("2");
+        constField.setMinimumSize(new java.awt.Dimension(50, 22));
+        constField.setPreferredSize(new java.awt.Dimension(50, 30));
+        add(constField, new java.awt.GridBagConstraints());
 
         fiMinLabel.setText("fi min: PI *");
-        add(fiMinLabel, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.weightx = 1.0;
+        add(fiMinLabel, gridBagConstraints);
 
-        fiMinSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        fiMinSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                fiMinSpinnerStateChanged(evt);
-            }
-        });
-        add(fiMinSpinner, new java.awt.GridBagConstraints());
+        fiMinField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        fiMinField.setText("0");
+        fiMinField.setMinimumSize(new java.awt.Dimension(50, 22));
+        fiMinField.setPreferredSize(new java.awt.Dimension(50, 30));
+        add(fiMinField, new java.awt.GridBagConstraints());
 
         fiMaxLabel.setText("fi max: PI *");
-        add(fiMaxLabel, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.weightx = 1.0;
+        add(fiMaxLabel, gridBagConstraints);
 
-        fiMaxSpinner.setModel(new javax.swing.SpinnerNumberModel(4, 1, null, 1));
-        fiMaxSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                fiMaxSpinnerStateChanged(evt);
-            }
-        });
-        add(fiMaxSpinner, new java.awt.GridBagConstraints());
+        fiMaxField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        fiMaxField.setText("4");
+        fiMaxField.setMinimumSize(new java.awt.Dimension(50, 22));
+        fiMaxField.setPreferredSize(new java.awt.Dimension(50, 30));
+        add(fiMaxField, new java.awt.GridBagConstraints());
 
-        jButton2.setText("jButton2");
-        add(jButton2, new java.awt.GridBagConstraints());
+        rangeXLabel.setText("range x:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.weightx = 1.0;
+        add(rangeXLabel, gridBagConstraints);
 
-        jButton3.setText("jButton3");
-        add(jButton3, new java.awt.GridBagConstraints());
+        rangeXSpinner.setModel(new javax.swing.SpinnerNumberModel(450, 0, 450, 1));
+        add(rangeXSpinner, new java.awt.GridBagConstraints());
+
+        rangeYLabel.setText("range y:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.weightx = 1.0;
+        add(rangeYLabel, gridBagConstraints);
+
+        rangeYSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 250, 1));
+        add(rangeYSpinner, new java.awt.GridBagConstraints());
+
+        stepLabel.setText("step:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.weightx = 1.0;
+        add(stepLabel, gridBagConstraints);
+
+        stepField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        stepField.setText("1");
+        stepField.setPreferredSize(new java.awt.Dimension(50, 30));
+        add(stepField, new java.awt.GridBagConstraints());
 
         drawGraphButton.setText("Draw");
-        add(drawGraphButton, new java.awt.GridBagConstraints());
+        drawGraphButton.setPreferredSize(new java.awt.Dimension(300, 100));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 5.0;
+        add(drawGraphButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void fiMinSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_fiMinSpinnerStateChanged
-        if((Integer)fiMinSpinner.getValue() >= (Integer)fiMaxSpinner.getValue()){
-            JOptionPane.showMessageDialog(null, "Enter value smaller than maximim.","Warning",JOptionPane.WARNING_MESSAGE);
-            fiMinSpinner.setValue(new Integer((Integer)fiMinSpinner.getValue()-1));
-        }
-        
-    }//GEN-LAST:event_fiMinSpinnerStateChanged
-
-    private void fiMaxSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_fiMaxSpinnerStateChanged
-        if((Integer)fiMaxSpinner.getValue() <= (Integer)fiMinSpinner.getValue()){
-            JOptionPane.showMessageDialog(null, "Enter value bigger than minimum.","Warning",JOptionPane.WARNING_MESSAGE);
-            fiMaxSpinner.setValue(new Integer((Integer)fiMaxSpinner.getValue()+1));
-        }
-    }//GEN-LAST:event_fiMaxSpinnerStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField constField;
     private javax.swing.JLabel constLabel;
-    private javax.swing.JSpinner constSpinner;
     private javax.swing.JButton drawGraphButton;
+    private javax.swing.JFormattedTextField fiMaxField;
     private javax.swing.JLabel fiMaxLabel;
-    private javax.swing.JSpinner fiMaxSpinner;
+    private javax.swing.JFormattedTextField fiMinField;
     private javax.swing.JLabel fiMinLabel;
-    private javax.swing.JSpinner fiMinSpinner;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel rangeXLabel;
+    private javax.swing.JSpinner rangeXSpinner;
+    private javax.swing.JLabel rangeYLabel;
+    private javax.swing.JSpinner rangeYSpinner;
+    private javax.swing.JFormattedTextField stepField;
+    private javax.swing.JLabel stepLabel;
     // End of variables declaration//GEN-END:variables
 }
