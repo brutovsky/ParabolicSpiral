@@ -30,6 +30,9 @@ public class PaintGraphPanel extends javax.swing.JPanel {
 
     private int div_intend;
 
+    private int x_range;
+    private int y_range;
+
     {
         list_x = new ArrayList<>();
         list_y = new ArrayList<>();
@@ -59,11 +62,25 @@ public class PaintGraphPanel extends javax.swing.JPanel {
         list_y = new ArrayList<>();
 
         div_intend = 15;
+        x_range = 60;
+        y_range = 60;
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        // paint Parabolic Spiral graph
+        //positive
+        drawPositiveGraph(g);
+        //negative
+        drawNegativeGraph(g);
+        //set ranges
+        g.setColor(Color.white);
+        g.fillRect(0, 0, lenght_x / 2 - x_range, lenght_y);
+        g.fillRect(lenght_x / 2 + x_range, 0, lenght_x / 2 - x_range, lenght_y);
+        g.fillRect(0, 0, lenght_x, lenght_y / 2 - y_range);
+        g.fillRect(0, lenght_y / 2 + y_range, lenght_x, lenght_y / 2 - y_range);
+        g.setColor(Color.black);
         //–азбиваем каждую ось на две части дл€ удобства переноса центра координат
         // ќсь Y
         g.drawLine((int) (lenght_x * kx + indent_x), indent_y,
@@ -138,12 +155,6 @@ public class PaintGraphPanel extends javax.swing.JPanel {
             //
             l1 = l1 + segmentation;
         }
-
-        // paint Parabolic Spiral graph
-        //positive
-        drawPositiveGraph(g);
-        //negative
-        drawNegativeGraph(g);
     }
 
     public void drawPositiveGraph(Graphics g) {
