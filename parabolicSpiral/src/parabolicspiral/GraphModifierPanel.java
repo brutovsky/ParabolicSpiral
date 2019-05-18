@@ -5,6 +5,8 @@
  */
 package parabolicspiral;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author VADIM
@@ -53,12 +55,22 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         add(fiMinLabel, new java.awt.GridBagConstraints());
 
         fiMinSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        fiMinSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                fiMinSpinnerStateChanged(evt);
+            }
+        });
         add(fiMinSpinner, new java.awt.GridBagConstraints());
 
         fiMaxLabel.setText("fi max: PI *");
         add(fiMaxLabel, new java.awt.GridBagConstraints());
 
         fiMaxSpinner.setModel(new javax.swing.SpinnerNumberModel(4, 1, null, 1));
+        fiMaxSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                fiMaxSpinnerStateChanged(evt);
+            }
+        });
         add(fiMaxSpinner, new java.awt.GridBagConstraints());
 
         jButton2.setText("jButton2");
@@ -70,6 +82,21 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         drawGraphButton.setText("Draw");
         add(drawGraphButton, new java.awt.GridBagConstraints());
     }// </editor-fold>//GEN-END:initComponents
+
+    private void fiMinSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_fiMinSpinnerStateChanged
+        if((Integer)fiMinSpinner.getValue() >= (Integer)fiMaxSpinner.getValue()){
+            JOptionPane.showMessageDialog(null, "Enter value smaller than maximim.","Warning",JOptionPane.WARNING_MESSAGE);
+            fiMinSpinner.setValue(new Integer((Integer)fiMinSpinner.getValue()-1));
+        }
+        
+    }//GEN-LAST:event_fiMinSpinnerStateChanged
+
+    private void fiMaxSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_fiMaxSpinnerStateChanged
+        if((Integer)fiMaxSpinner.getValue() <= (Integer)fiMinSpinner.getValue()){
+            JOptionPane.showMessageDialog(null, "Enter value bigger than minimum.","Warning",JOptionPane.WARNING_MESSAGE);
+            fiMaxSpinner.setValue(new Integer((Integer)fiMaxSpinner.getValue()+1));
+        }
+    }//GEN-LAST:event_fiMaxSpinnerStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
