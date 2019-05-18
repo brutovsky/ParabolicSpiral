@@ -7,6 +7,7 @@ package parabolicspiral;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 
 /**
@@ -17,6 +18,22 @@ public class PaintGraphPanel extends javax.swing.JPanel {
 
     private int segmentation, nx, indent_y, oyk, oyx, indent_x, oxk, oxy, lenght_y, lenght_x, sw, xln, l2;
     private float xng, kx, ky, hx, yg, xk;
+    private float a;
+    private float fi_min = 0;
+    private double fi_max = Math.PI * 4;
+    private double r;
+    private double x;
+    private double y;
+    private double precision = 0.01;
+    private ArrayList<Double> list_x;
+    private ArrayList<Double> list_y;
+
+    private int div_intend;
+
+    {
+        list_x = new ArrayList<>();
+        list_y = new ArrayList<>();
+    }
 
     /**
      * Creates new form PaintGraphPanel
@@ -32,6 +49,16 @@ public class PaintGraphPanel extends javax.swing.JPanel {
         lenght_x = 900 - 10; // длина оси х
 
         hx = (float) 0.011;//шаг табул€ции
+
+        //for graph
+        a = 200;
+        fi_min = 0;
+        fi_max = Math.PI * 4;
+        precision = 0.01;
+        list_x = new ArrayList<>();
+        list_y = new ArrayList<>();
+
+        div_intend = 15;
     }
 
     @Override
@@ -54,15 +81,25 @@ public class PaintGraphPanel extends javax.swing.JPanel {
         l2 = lenght_y - l1;
         int k1 = (int) l1 / segmentation;
         int k2 = (int) l2 / segmentation;
-        for (int i = 1; i < k1 + 1; i++) {
-            g.drawLine((int) (lenght_x * kx - 2 + indent_x), l1 - segmentation + indent_y,
+        for (int i = 1; i < k1; i++) {
+            int lx = (int) (lenght_x * kx - 2 + indent_x);
+            int ly = l1 - segmentation + indent_y;
+            g.drawLine(lx, ly,
                     (int) (lenght_x * kx + 2 + indent_x), l1 - segmentation + indent_y);
+            //MY CODE GOES HERE
+            g.drawString(new Integer(i).toString(), lx - div_intend, ly);
+            //
             l1 = l1 - segmentation;
         }
         l1 = lenght_y - l2;
         for (int i = 1; i < k2 + 1; i++) {
-            g.drawLine((int) (lenght_x * kx - 2 + indent_x), l1 + segmentation + indent_y,
+            int lx = (int) (lenght_x * kx - 2 + indent_x);
+            int ly = l1 + segmentation + indent_y;
+            g.drawLine(lx, ly,
                     (int) (lenght_x * kx + 2 + indent_x), l1 + segmentation + indent_y);
+            //MY CODE GOES HERE
+            g.drawString(new Integer(-i).toString(), lx - div_intend, ly);
+            //
             l1 = l1 + segmentation;
         }
         // ќсь ’
@@ -79,76 +116,82 @@ public class PaintGraphPanel extends javax.swing.JPanel {
         k1 = (int) l1 / segmentation;
         k2 = (int) l2 / segmentation;
         for (int i = 1; i < k1 + 1; i++) {
-            g.drawLine(l1 - segmentation + indent_x, (int) (lenght_y * ky - 2 + indent_y),
+            int lx = l1 - segmentation + indent_x;
+            int ly = (int) (lenght_y * ky - 2 + indent_y);
+            g.drawLine(lx, ly,
                     l1 - segmentation + indent_x, (int) (lenght_y * ky + 2 + indent_y));
+            //MY CODE GOES HERE
+            g.drawString(new Integer(-i).toString(), lx, ly + div_intend);
+            //
             l1 = l1 - segmentation;
         }
         l1 = lenght_x - l2;
         double xl = l1 / segmentation;
         double xl1 = l2 / segmentation;
-        for (int i = 1; i < k2 + 1; i++) {
-            g.drawLine(l1 + segmentation + indent_x, (int) (lenght_y * ky - 2 + indent_y),
+        for (int i = 1; i < k2; i++) {
+            int lx = l1 + segmentation + indent_x;
+            int ly = (int) (lenght_y * ky - 2 + indent_y);
+            g.drawLine(lx, ly,
                     l1 + segmentation + indent_x, (int) (lenght_y * ky + 2 + indent_y));
+            //MY CODE GOES HERE
+            g.drawString(new Integer(i).toString(), lx, ly + div_intend);
+            //
             l1 = l1 + segmentation;
         }
 
         // paint Parabolic Spiral graph
-        float a = 2000;
-        float fi_min = 0;
-        double fi_max = Math.PI * 20;
-        double r;
-        double x;
-        double y;
-        double precision = 0.5;
-        ArrayList<Double> list_x = new ArrayList<>();
-        ArrayList<Double> list_y = new ArrayList<>();
-
         //positive
-        {
-            for (double fi = fi_min; fi <= fi_max; fi += precision) {
-                r = Math.sqrt(2 * a * fi);
-                x = r * Math.cos(fi);
-                y = -r * Math.sin(fi);
-                list_x.add(x);
-                list_y.add(y);
-            }
-
-            int[] array_x = new int[list_x.size()];
-            for (int i = 0; i < list_x.size(); i++) {
-                array_x[i] = list_x.get(i).intValue() + lenght_x / 2;
-            }
-
-            int[] array_y = new int[list_y.size()];
-            for (int i = 0; i < list_y.size(); i++) {
-                array_y[i] = list_y.get(i).intValue() + lenght_y / 2;
-            }
-            g.setColor(Color.BLUE);
-            g.drawPolyline(array_x, array_y, array_x.length);
-        }
+        drawPositiveGraph(g);
         //negative
-        {
-            list_x = new ArrayList<>();
-            list_y = new ArrayList<>();
-            for (double fi = fi_min; fi <= fi_max; fi += precision) {
-                r = Math.sqrt(2 * a * fi);
-                x = -r * Math.cos(fi);
-                y = r * Math.sin(fi);
-                list_x.add(x);
-                list_y.add(y);
-            }
+        drawNegativeGraph(g);
+    }
 
-            int[] array_x = new int[list_x.size()];
-            for (int i = 0; i < list_x.size(); i++) {
-                array_x[i] = list_x.get(i).intValue() + lenght_x / 2;
-            }
-
-            int[] array_y = new int[list_y.size()];
-            for (int i = 0; i < list_y.size(); i++) {
-                array_y[i] = list_y.get(i).intValue() + lenght_y / 2;
-            }
-            g.setColor(Color.RED);
-            g.drawPolyline(array_x, array_y, array_x.length);
+    public void drawPositiveGraph(Graphics g) {
+        list_x = new ArrayList<>();
+        list_y = new ArrayList<>();
+        for (double fi = fi_min; fi <= fi_max; fi += precision) {
+            r = Math.sqrt(2 * a * fi);
+            x = r * Math.cos(fi);
+            y = -r * Math.sin(fi);
+            list_x.add(x);
+            list_y.add(y);
         }
+
+        int[] array_x = new int[list_x.size()];
+        for (int i = 0; i < list_x.size(); i++) {
+            array_x[i] = list_x.get(i).intValue() + lenght_x / 2;
+        }
+
+        int[] array_y = new int[list_y.size()];
+        for (int i = 0; i < list_y.size(); i++) {
+            array_y[i] = list_y.get(i).intValue() + lenght_y / 2;
+        }
+        g.setColor(Color.BLUE);
+        g.drawPolyline(array_x, array_y, array_x.length);
+    }
+
+    public void drawNegativeGraph(Graphics g) {
+        list_x = new ArrayList<>();
+        list_y = new ArrayList<>();
+        for (double fi = fi_min; fi <= fi_max; fi += precision) {
+            r = Math.sqrt(2 * a * fi);
+            x = -r * Math.cos(fi);
+            y = r * Math.sin(fi);
+            list_x.add(x);
+            list_y.add(y);
+        }
+
+        int[] array_x = new int[list_x.size()];
+        for (int i = 0; i < list_x.size(); i++) {
+            array_x[i] = list_x.get(i).intValue() + lenght_x / 2;
+        }
+
+        int[] array_y = new int[list_y.size()];
+        for (int i = 0; i < list_y.size(); i++) {
+            array_y[i] = list_y.get(i).intValue() + lenght_y / 2;
+        }
+        g.setColor(Color.RED);
+        g.drawPolyline(array_x, array_y, array_x.length);
     }
 
     /**
