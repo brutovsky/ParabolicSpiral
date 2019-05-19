@@ -12,7 +12,9 @@ import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -164,12 +166,29 @@ public class GraphModifierPanel extends javax.swing.JPanel {
     private void saveButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseReleased
         BufferedImage bImage = getScreenComponent(frame.getPaintGraph());
         try {
-            File file = new File("hello" + ".png");
-            file.createNewFile();
+            File file = new File(System.getProperty("user.dir") + "/graphPictures/" + "Graph(a=" + frame.getPaintGraph().getA()/100 +";fi=["+frame.getPaintGraph().getFi_min()/Math.PI+"PI,"+frame.getPaintGraph().getFi_max()/Math.PI+"PI])" + ".png");
+            if (file.exists()) {
+                int res = JOptionPane.showConfirmDialog(null, "Ви впевенні, що хочете перезаписати сейв " + file.getName() + "?", "Перезаписати ?", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (res == JOptionPane.YES_OPTION) {
+                    file.createNewFile();
+                } else {
+                    return;
+                }
+            } else {
+                file.createNewFile();
+            }
             ImageIO.write(bImage, "png", file);
         } catch (IOException ex) {
-            Logger.getLogger(GraphModifierPanel.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
+
+        /*try {
+            File file = new File("hello" + ".png");
+            file.createNewFile();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(GraphModifierPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
     }//GEN-LAST:event_saveButtonMouseReleased
 
     public JTextField getConstField() {

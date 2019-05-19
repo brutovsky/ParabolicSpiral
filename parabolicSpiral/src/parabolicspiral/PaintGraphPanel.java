@@ -42,6 +42,20 @@ public class PaintGraphPanel extends javax.swing.JPanel {
         list_y = new ArrayList<>();
     }
 
+    public float getA() {
+        return a;
+    }
+
+    public double getFi_min() {
+        return fi_min;
+    }
+
+    public double getFi_max() {
+        return fi_max;
+    }
+
+    
+    
     /**
      * Creates new form PaintGraphPanel
      */
