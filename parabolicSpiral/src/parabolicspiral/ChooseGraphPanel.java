@@ -61,6 +61,7 @@ public class ChooseGraphPanel extends javax.swing.JPanel {
         add(positiveGraphRButton);
 
         negativeGraphRButton.setForeground(new java.awt.Color(204, 0, 0));
+        negativeGraphRButton.setSelected(true);
         negativeGraphRButton.setText("-negative graph");
         negativeGraphRButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         negativeGraphRButton.setMaximumSize(new java.awt.Dimension(450, 25));

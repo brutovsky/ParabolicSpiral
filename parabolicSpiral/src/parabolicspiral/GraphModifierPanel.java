@@ -5,12 +5,17 @@
  */
 package parabolicspiral;
 
+import java.awt.Component;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
@@ -157,15 +162,13 @@ public class GraphModifierPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_drawGraphButtonMouseReleased
 
     private void saveButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseReleased
+        BufferedImage bImage = getScreenComponent(frame.getPaintGraph());
         try {
-            Robot robot = new Robot();
-            Rectangle componentRectangle = new Rectangle(5, 58, 890, 470);
-            RenderedImage componentImage = robot.createScreenCapture(componentRectangle);
-            File file = new  File("hello"+".png");
+            File file = new File("hello" + ".png");
             file.createNewFile();
-            ImageIO.write(componentImage, "png", file);
-        } catch (Exception e) {
-            e.printStackTrace();
+            ImageIO.write(bImage, "png", file);
+        } catch (IOException ex) {
+            Logger.getLogger(GraphModifierPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_saveButtonMouseReleased
 
@@ -221,6 +224,15 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         return stepLabel;
     }
 
+    public static BufferedImage getScreenComponent(Component component) {
+        BufferedImage image = new BufferedImage(
+                component.getWidth(),
+                component.getHeight(),
+                BufferedImage.TYPE_INT_RGB
+        );
+        component.paint(image.getGraphics());
+        return image;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField constField;
     private javax.swing.JLabel constLabel;
