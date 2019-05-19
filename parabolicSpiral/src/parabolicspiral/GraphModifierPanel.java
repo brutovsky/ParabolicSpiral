@@ -5,7 +5,13 @@
  */
 package parabolicspiral;
 
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.image.RenderedImage;
+import java.io.File;
 import java.text.DecimalFormat;
+import javax.imageio.ImageIO;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -56,6 +62,7 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         stepLabel = new javax.swing.JLabel();
         stepField = new javax.swing.JFormattedTextField();
         drawGraphButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(600, 100));
         setMinimumSize(new java.awt.Dimension(600, 100));
@@ -106,7 +113,7 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         add(rangeYLabel, gridBagConstraints);
 
-        rangeYSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 250, 1));
+        rangeYSpinner.setModel(new javax.swing.SpinnerNumberModel(250, 0, 250, 1));
         add(rangeYSpinner, new java.awt.GridBagConstraints());
 
         stepLabel.setText("step:");
@@ -120,7 +127,7 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         add(stepField, new java.awt.GridBagConstraints());
 
         drawGraphButton.setText("Draw");
-        drawGraphButton.setPreferredSize(new java.awt.Dimension(300, 100));
+        drawGraphButton.setPreferredSize(new java.awt.Dimension(150, 100));
         drawGraphButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 drawGraphButtonMouseReleased(evt);
@@ -130,11 +137,37 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 5.0;
         add(drawGraphButton, gridBagConstraints);
+
+        saveButton.setText("Save");
+        saveButton.setMaximumSize(new java.awt.Dimension(150, 100));
+        saveButton.setMinimumSize(new java.awt.Dimension(150, 100));
+        saveButton.setPreferredSize(new java.awt.Dimension(150, 100));
+        saveButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                saveButtonMouseReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        add(saveButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void drawGraphButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawGraphButtonMouseReleased
         frame.repaintGraph();
     }//GEN-LAST:event_drawGraphButtonMouseReleased
+
+    private void saveButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseReleased
+        try {
+            Robot robot = new Robot();
+            Rectangle componentRectangle = new Rectangle(5, 58, 890, 470);
+            RenderedImage componentImage = robot.createScreenCapture(componentRectangle);
+            File file = new  File("hello"+".png");
+            file.createNewFile();
+            ImageIO.write(componentImage, "png", file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_saveButtonMouseReleased
 
     public JTextField getConstField() {
         return constField;
@@ -200,6 +233,7 @@ public class GraphModifierPanel extends javax.swing.JPanel {
     private javax.swing.JSpinner rangeXSpinner;
     private javax.swing.JLabel rangeYLabel;
     private javax.swing.JSpinner rangeYSpinner;
+    private javax.swing.JButton saveButton;
     private javax.swing.JFormattedTextField stepField;
     private javax.swing.JLabel stepLabel;
     // End of variables declaration//GEN-END:variables
