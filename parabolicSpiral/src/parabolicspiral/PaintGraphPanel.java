@@ -258,7 +258,7 @@ public class PaintGraphPanel extends javax.swing.JPanel {
         a = Float.parseFloat(modifyPanel.getConstField().getText()) * coordinatePanel.getScaleSlider().getValue() * coordinatePanel.getScaleSlider().getValue() / 100;
         fi_min = Math.PI * Float.parseFloat(modifyPanel.getFiMinField().getText());
         fi_max = Math.PI * Float.parseFloat(modifyPanel.getFiMaxField().getText());
-        precision = Integer.parseInt(modifyPanel.getStepField().getText()) * 0.1;
+        precision = Double.parseDouble(modifyPanel.getStepField().getText()) * 0.1;
         list_x = new ArrayList<>();
         list_y = new ArrayList<>();
 

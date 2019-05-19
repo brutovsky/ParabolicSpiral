@@ -18,6 +18,7 @@ import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
@@ -36,6 +37,8 @@ import javax.swing.text.DefaultFormatterFactory;
 public class GraphModifierPanel extends javax.swing.JPanel {
 
     ParabolicSpiralFrame frame;
+    static public String REGEX_DOUBLE = new String("[-]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?");
+    static public String REGEX_POSITIVE_DOUBLE = new String("[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?");
 
     /**
      * Creates new form GraphModifierPanel
@@ -59,15 +62,15 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         constLabel = new javax.swing.JLabel();
         constField = new javax.swing.JTextField();
         fiMinLabel = new javax.swing.JLabel();
-        fiMinField = new javax.swing.JFormattedTextField();
+        fiMinField = new javax.swing.JTextField();
         fiMaxLabel = new javax.swing.JLabel();
-        fiMaxField = new javax.swing.JFormattedTextField();
+        fiMaxField = new javax.swing.JTextField();
         rangeXLabel = new javax.swing.JLabel();
         rangeXSpinner = new javax.swing.JSpinner();
         rangeYLabel = new javax.swing.JLabel();
         rangeYSpinner = new javax.swing.JSpinner();
         stepLabel = new javax.swing.JLabel();
-        stepField = new javax.swing.JFormattedTextField();
+        stepField = new javax.swing.JTextField();
         drawGraphButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
 
@@ -83,6 +86,16 @@ public class GraphModifierPanel extends javax.swing.JPanel {
 
         constField.setText("2");
         constField.setPreferredSize(new java.awt.Dimension(50, 30));
+        constField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                constFieldFocusLost(evt);
+            }
+        });
+        constField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                constFieldPropertyChange(evt);
+            }
+        });
         add(constField, new java.awt.GridBagConstraints());
 
         fiMinLabel.setText("fi min: PI *");
@@ -90,10 +103,13 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         add(fiMinLabel, gridBagConstraints);
 
-        fiMinField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         fiMinField.setText("0");
-        fiMinField.setMinimumSize(new java.awt.Dimension(50, 22));
         fiMinField.setPreferredSize(new java.awt.Dimension(50, 30));
+        fiMinField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fiMinFieldFocusLost(evt);
+            }
+        });
         add(fiMinField, new java.awt.GridBagConstraints());
 
         fiMaxLabel.setText("fi max: PI *");
@@ -101,10 +117,13 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         add(fiMaxLabel, gridBagConstraints);
 
-        fiMaxField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         fiMaxField.setText("4");
-        fiMaxField.setMinimumSize(new java.awt.Dimension(50, 22));
         fiMaxField.setPreferredSize(new java.awt.Dimension(50, 30));
+        fiMaxField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fiMaxFieldFocusLost(evt);
+            }
+        });
         add(fiMaxField, new java.awt.GridBagConstraints());
 
         rangeXLabel.setText("range x:");
@@ -128,9 +147,13 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         add(stepLabel, gridBagConstraints);
 
-        stepField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         stepField.setText("1");
         stepField.setPreferredSize(new java.awt.Dimension(50, 30));
+        stepField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                stepFieldFocusLost(evt);
+            }
+        });
         add(stepField, new java.awt.GridBagConstraints());
 
         drawGraphButton.setText("Draw");
@@ -166,9 +189,9 @@ public class GraphModifierPanel extends javax.swing.JPanel {
     private void saveButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseReleased
         BufferedImage bImage = getScreenComponent(frame.getPaintGraph());
         try {
-            File file = new File(System.getProperty("user.dir") + "/graphPictures/" + "Graph(a=" + frame.getPaintGraph().getA()/100 +";fi=["+frame.getPaintGraph().getFi_min()/Math.PI+"PI,"+frame.getPaintGraph().getFi_max()/Math.PI+"PI])" + ".png");
+            File file = new File(System.getProperty("user.dir") + "/graphPictures/" + "Graph(a=" + frame.getPaintGraph().getA() / 100 + ";fi=[" + frame.getPaintGraph().getFi_min() / Math.PI + "PI," + frame.getPaintGraph().getFi_max() / Math.PI + "PI])" + ".png");
             if (file.exists()) {
-                int res = JOptionPane.showConfirmDialog(null, "Ви впевенні, що хочете перезаписати сейв " + file.getName() + "?", "Перезаписати ?", JOptionPane.YES_NO_CANCEL_OPTION);
+                int res = JOptionPane.showConfirmDialog(null, "Are you sure you want to overwrite " + file.getName() + "?", "Overwrite ?", JOptionPane.YES_NO_CANCEL_OPTION);
                 if (res == JOptionPane.YES_OPTION) {
                     file.createNewFile();
                 } else {
@@ -181,15 +204,51 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
-        /*try {
-            File file = new File("hello" + ".png");
-            file.createNewFile();
-            
-        } catch (IOException ex) {
-            Logger.getLogger(GraphModifierPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
     }//GEN-LAST:event_saveButtonMouseReleased
+
+    private void constFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_constFieldPropertyChange
+
+    }//GEN-LAST:event_constFieldPropertyChange
+
+    private void constFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_constFieldFocusLost
+        if (constField.getText().matches(REGEX_POSITIVE_DOUBLE)) {
+        } else {
+            constField.setText("2");
+            JOptionPane.showMessageDialog(null, "Enter valid value. Const a changed to 2.", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_constFieldFocusLost
+
+    private void fiMinFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fiMinFieldFocusLost
+        if (fiMinField.getText().matches(REGEX_POSITIVE_DOUBLE)) {
+        } else {
+            fiMinField.setText("0");
+            JOptionPane.showMessageDialog(null, "Enter valid value. Fi min changed to 0.", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
+        }
+        if(Double.parseDouble(fiMinField.getText()) >= Double.parseDouble(fiMaxField.getText())){
+            fiMinField.setText("0");
+            JOptionPane.showMessageDialog(null, "Enter value smaller than maximum fi. Fi min changed to 0.", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_fiMinFieldFocusLost
+
+    private void fiMaxFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fiMaxFieldFocusLost
+        if (fiMaxField.getText().matches(REGEX_POSITIVE_DOUBLE)) {
+        } else {
+            fiMaxField.setText("4");
+            JOptionPane.showMessageDialog(null, "Enter valid value. Fi max changed to 4.", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
+        }
+        if(Double.parseDouble(fiMaxField.getText()) <= Double.parseDouble(fiMinField.getText())){
+            fiMaxField.setText("4");
+            JOptionPane.showMessageDialog(null, "Enter value bigger than minimal fi. Fi max changed to 4.", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_fiMaxFieldFocusLost
+
+    private void stepFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_stepFieldFocusLost
+        if (stepField.getText().matches(REGEX_POSITIVE_DOUBLE)) {
+        } else {
+            stepField.setText("1");
+            JOptionPane.showMessageDialog(null, "Enter valid value. Step changed to 1.", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_stepFieldFocusLost
 
     public JTextField getConstField() {
         return constField;
@@ -203,7 +262,7 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         return drawGraphButton;
     }
 
-    public JFormattedTextField getFiMaxField() {
+    public JTextField getFiMaxField() {
         return fiMaxField;
     }
 
@@ -211,7 +270,7 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         return fiMaxLabel;
     }
 
-    public JFormattedTextField getFiMinField() {
+    public JTextField getFiMinField() {
         return fiMinField;
     }
 
@@ -235,7 +294,7 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         return rangeYSpinner;
     }
 
-    public JFormattedTextField getStepField() {
+    public JTextField getStepField() {
         return stepField;
     }
 
@@ -256,16 +315,16 @@ public class GraphModifierPanel extends javax.swing.JPanel {
     private javax.swing.JTextField constField;
     private javax.swing.JLabel constLabel;
     private javax.swing.JButton drawGraphButton;
-    private javax.swing.JFormattedTextField fiMaxField;
+    private javax.swing.JTextField fiMaxField;
     private javax.swing.JLabel fiMaxLabel;
-    private javax.swing.JFormattedTextField fiMinField;
+    private javax.swing.JTextField fiMinField;
     private javax.swing.JLabel fiMinLabel;
     private javax.swing.JLabel rangeXLabel;
     private javax.swing.JSpinner rangeXSpinner;
     private javax.swing.JLabel rangeYLabel;
     private javax.swing.JSpinner rangeYSpinner;
     private javax.swing.JButton saveButton;
-    private javax.swing.JFormattedTextField stepField;
+    private javax.swing.JTextField stepField;
     private javax.swing.JLabel stepLabel;
     // End of variables declaration//GEN-END:variables
 }
