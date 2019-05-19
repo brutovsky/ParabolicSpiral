@@ -19,7 +19,7 @@ public class PaintGraphPanel extends javax.swing.JPanel {
     private int segmentation, nx, indent_y, oyk, oyx, indent_x, oxk, oxy, lenght_y, lenght_x, sw, xln, l2;
     private float xng, kx, ky, hx, yg, xk;
     private float a;
-    private float fi_min = 0;
+    private double fi_min = 0;
     private double fi_max = Math.PI * 4;
     private double r;
     private double x;
@@ -46,7 +46,7 @@ public class PaintGraphPanel extends javax.swing.JPanel {
      * Creates new form PaintGraphPanel
      */
     public PaintGraphPanel(ChooseGraphPanel choosePanel, GraphModifierPanel modifyPanel, CoordinateSystemModifierPanel coordinatePanel) {
-        this.choosePanel =choosePanel;
+        this.choosePanel = choosePanel;
         this.modifyPanel = modifyPanel;
         this.coordinatePanel = coordinatePanel;
         initComponents();
@@ -55,38 +55,23 @@ public class PaintGraphPanel extends javax.swing.JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        segmentation = 20;// цена делени€  по шкалам
-        ky = (float) 0.5; // коэф шкалы по у
-        kx = (float) 0.5; // коэф шкалы по x
-        indent_y = 0; // начальный отступ по y
-        indent_x = 0; //начальный отступ по х
-        lenght_y = 500 - 10; // длина оси у
-        lenght_x = 900 - 10; // длина оси х
-
-        hx = (float) 0.011;//шаг табул€ции
-
-        //for graph
-        a = Float.parseFloat(modifyPanel.getConstField().getText()) * 100;
-        fi_min = 0;
-        fi_max = Math.PI * 4;
-        precision = 0.1;
-        list_x = new ArrayList<>();
-        list_y = new ArrayList<>();
-
-        div_intend = 15;
-        x_range = 450;
-        y_range = 250;
+        initVariables();
         // paint Parabolic Spiral graph
         //positive
-        drawPositiveGraph(g);
+        if (choosePanel.getPositiveGraphRButton().isSelected()) {
+            drawPositiveGraph(g);
+        }
+
         //negative
-        drawNegativeGraph(g);
+        if (choosePanel.getNegativeGraphRButton().isSelected()) {
+            drawNegativeGraph(g);
+        }
         //set ranges
         g.setColor(Color.white);
         g.fillRect(0, 0, lenght_x / 2 - x_range, lenght_y);
-        g.fillRect(lenght_x / 2 + x_range, 0, lenght_x / 2 - x_range, lenght_y);
-        g.fillRect(0, 0, lenght_x, lenght_y / 2 - y_range);
-        g.fillRect(0, lenght_y / 2 + y_range, lenght_x, lenght_y / 2 - y_range);
+        g.fillRect(lenght_x / 2 + x_range, 0, lenght_x / 2, lenght_y);
+        g.fillRect(0, 0, lenght_x+5, lenght_y / 2 - y_range);
+        g.fillRect(0, lenght_y / 2 + y_range, lenght_x+5, lenght_y / 2 - y_range);
         g.setColor(Color.black);
         //–азбиваем каждую ось на две части дл€ удобства переноса центра координат
         // ќсь Y
@@ -111,7 +96,10 @@ public class PaintGraphPanel extends javax.swing.JPanel {
             g.drawLine(lx, ly,
                     (int) (lenght_x * kx + 2 + indent_x), l1 - segmentation + indent_y);
             //MY CODE GOES HERE
-            g.drawString(new Integer(i).toString(), lx - div_intend, ly);
+            g.setColor(Color.GRAY);
+            double d = (double) (long) (i / ((double) coordinatePanel.getScaleSlider().getValue() / 100) * 10) / 10;
+            g.drawString((new Double(d)).toString(), lx - div_intend, ly);
+            g.setColor(Color.black);
             //
             l1 = l1 - segmentation;
         }
@@ -122,7 +110,10 @@ public class PaintGraphPanel extends javax.swing.JPanel {
             g.drawLine(lx, ly,
                     (int) (lenght_x * kx + 2 + indent_x), l1 + segmentation + indent_y);
             //MY CODE GOES HERE
-            g.drawString(new Integer(-i).toString(), lx - div_intend, ly);
+            g.setColor(Color.GRAY);
+            double d = -(double) (long) (i / ((double) coordinatePanel.getScaleSlider().getValue() / 100) * 10) / 10;
+            g.drawString((new Double(d)).toString(), lx - div_intend, ly);
+            g.setColor(Color.black);
             //
             l1 = l1 + segmentation;
         }
@@ -145,7 +136,12 @@ public class PaintGraphPanel extends javax.swing.JPanel {
             g.drawLine(lx, ly,
                     l1 - segmentation + indent_x, (int) (lenght_y * ky + 2 + indent_y));
             //MY CODE GOES HERE
-            g.drawString(new Integer(-i).toString(), lx, ly + div_intend);
+            if (i % 3 == 0) {
+                g.setColor(Color.GRAY);
+                double d = -(double) (long) (i / ((double) coordinatePanel.getScaleSlider().getValue() / 100) * 10) / 10;
+                g.drawString((new Double(d)).toString(), lx, ly + div_intend);
+                g.setColor(Color.black);
+            }
             //
             l1 = l1 - segmentation;
         }
@@ -158,7 +154,12 @@ public class PaintGraphPanel extends javax.swing.JPanel {
             g.drawLine(lx, ly,
                     l1 + segmentation + indent_x, (int) (lenght_y * ky + 2 + indent_y));
             //MY CODE GOES HERE
-            g.drawString(new Integer(i).toString(), lx, ly + div_intend);
+            if (i % 3 == 0) {
+                g.setColor(Color.GRAY);
+                double d = (double) (long) (i / ((double) coordinatePanel.getScaleSlider().getValue() / 100) * 10) / 10;
+                g.drawString((new Double(d)).toString(), lx, ly + div_intend);
+                g.setColor(Color.black);
+            }
             //
             l1 = l1 + segmentation;
         }
@@ -227,6 +228,30 @@ public class PaintGraphPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(900, 500));
         setLayout(new java.awt.GridLayout());
     }// </editor-fold>//GEN-END:initComponents
+
+    private void initVariables() {
+        segmentation = 20;// цена делени€  по шкалам
+        ky = (float) 0.5; // коэф шкалы по у
+        kx = (float) 0.5; // коэф шкалы по x
+        indent_y = 0; // начальный отступ по y
+        indent_x = 0; //начальный отступ по х
+        lenght_y = 500 - 10; // длина оси у
+        lenght_x = 900 - 10; // длина оси х
+
+        hx = (float) 0.011;//шаг табул€ции
+
+        //for graph
+        a = Float.parseFloat(modifyPanel.getConstField().getText()) * coordinatePanel.getScaleSlider().getValue() * coordinatePanel.getScaleSlider().getValue() / 100;
+        fi_min = Math.PI * Float.parseFloat(modifyPanel.getFiMinField().getText());
+        fi_max = Math.PI * Float.parseFloat(modifyPanel.getFiMaxField().getText());
+        precision = Integer.parseInt(modifyPanel.getStepField().getText()) * 0.1;
+        list_x = new ArrayList<>();
+        list_y = new ArrayList<>();
+
+        div_intend = 35;
+        x_range = 2*(Integer)modifyPanel.getRangeXSpinner().getValue();
+        y_range = 2*(Integer)modifyPanel.getRangeYSpinner().getValue();
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,18 +5,31 @@
  */
 package parabolicspiral;
 
+import javax.swing.JRadioButton;
+
 /**
  *
  * @author VADIM
  */
 public class ChooseGraphPanel extends javax.swing.JPanel {
 
+    ParabolicSpiralFrame frame;
+
     /**
      * Creates new form ChooseGraphPanel
      */
-    public ChooseGraphPanel() {
+    public ChooseGraphPanel(ParabolicSpiralFrame frame) {
+        this.frame = frame;
         initComponents();
         this.setSize(900, 25);
+    }
+
+    public JRadioButton getNegativeGraphRButton() {
+        return negativeGraphRButton;
+    }
+
+    public JRadioButton getPositiveGraphRButton() {
+        return positiveGraphRButton;
     }
 
     /**
@@ -33,18 +46,49 @@ public class ChooseGraphPanel extends javax.swing.JPanel {
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
-        positiveGraphRButton.setText("+r");
+        positiveGraphRButton.setForeground(new java.awt.Color(0, 0, 255));
+        positiveGraphRButton.setSelected(true);
+        positiveGraphRButton.setText("+positive graph");
+        positiveGraphRButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         positiveGraphRButton.setMaximumSize(new java.awt.Dimension(450, 25));
         positiveGraphRButton.setMinimumSize(new java.awt.Dimension(450, 25));
         positiveGraphRButton.setPreferredSize(new java.awt.Dimension(450, 25));
+        positiveGraphRButton.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                positiveGraphRButtonStateChanged(evt);
+            }
+        });
         add(positiveGraphRButton);
 
-        negativeGraphRButton.setText("-r");
+        negativeGraphRButton.setForeground(new java.awt.Color(204, 0, 0));
+        negativeGraphRButton.setText("-negative graph");
+        negativeGraphRButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         negativeGraphRButton.setMaximumSize(new java.awt.Dimension(450, 25));
         negativeGraphRButton.setMinimumSize(new java.awt.Dimension(450, 25));
         negativeGraphRButton.setPreferredSize(new java.awt.Dimension(450, 25));
+        negativeGraphRButton.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                negativeGraphRButtonStateChanged(evt);
+            }
+        });
         add(negativeGraphRButton);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void positiveGraphRButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_positiveGraphRButtonStateChanged
+        if (!negativeGraphRButton.isSelected()) {
+            positiveGraphRButton.setSelected(true);
+            return;
+        }
+        frame.repaintGraph();
+    }//GEN-LAST:event_positiveGraphRButtonStateChanged
+
+    private void negativeGraphRButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_negativeGraphRButtonStateChanged
+        if (!positiveGraphRButton.isSelected()) {
+            negativeGraphRButton.setSelected(true);
+            return;
+        }
+        frame.repaintGraph();
+    }//GEN-LAST:event_negativeGraphRButtonStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,16 +5,21 @@
  */
 package parabolicspiral;
 
+import javax.swing.JSlider;
+
 /**
  *
  * @author VADIM
  */
 public class CoordinateSystemModifierPanel extends javax.swing.JPanel {
 
+    ParabolicSpiralFrame frame;
+    
     /**
      * Creates new form CoordinateSystemModifierPanel
      */
-    public CoordinateSystemModifierPanel() {
+    public CoordinateSystemModifierPanel(ParabolicSpiralFrame frame) {
+        this.frame = frame;
         initComponents();
         this.setSize(300,680);
     }
@@ -28,23 +33,43 @@ public class CoordinateSystemModifierPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        scaleLabel = new javax.swing.JLabel();
+        scaleSlider = new javax.swing.JSlider();
+
         setMaximumSize(new java.awt.Dimension(300, 680));
         setMinimumSize(new java.awt.Dimension(300, 680));
         setPreferredSize(new java.awt.Dimension(300, 680));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
-        );
+        scaleLabel.setText("Scale:");
+        add(scaleLabel);
+
+        scaleSlider.setMajorTickSpacing(30);
+        scaleSlider.setMaximum(400);
+        scaleSlider.setMinimum(10);
+        scaleSlider.setMinorTickSpacing(10);
+        scaleSlider.setOrientation(javax.swing.JSlider.VERTICAL);
+        scaleSlider.setPaintLabels(true);
+        scaleSlider.setPaintTicks(true);
+        scaleSlider.setValue(100);
+        scaleSlider.setPreferredSize(new java.awt.Dimension(58, 475));
+        scaleSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                scaleSliderStateChanged(evt);
+            }
+        });
+        add(scaleSlider);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void scaleSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_scaleSliderStateChanged
+        frame.repaintGraph();
+    }//GEN-LAST:event_scaleSliderStateChanged
+
+    public JSlider getScaleSlider() {
+        return scaleSlider;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel scaleLabel;
+    private javax.swing.JSlider scaleSlider;
     // End of variables declaration//GEN-END:variables
 }

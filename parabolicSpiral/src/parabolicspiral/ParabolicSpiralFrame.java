@@ -25,9 +25,9 @@ public class ParabolicSpiralFrame extends javax.swing.JFrame {
      */
     public ParabolicSpiralFrame() {
         initComponents();
-        chooseGraph = new ChooseGraphPanel();
+        chooseGraph = new ChooseGraphPanel(this);
         modifyGraph = new GraphModifierPanel(this);
-        coordinateModifier = new CoordinateSystemModifierPanel();
+        coordinateModifier = new CoordinateSystemModifierPanel(this);
         paintGraph = new PaintGraphPanel(chooseGraph, modifyGraph, coordinateModifier);
         paintGraph.setBackground(Color.white);
         add(chooseGraph, BorderLayout.NORTH);
@@ -98,8 +98,13 @@ public class ParabolicSpiralFrame extends javax.swing.JFrame {
     }
 
     public void repaintGraph() {
-       paintGraph.repaint();
+        paintGraph.repaint();
     }
+
+    public PaintGraphPanel getPaintGraph() {
+        return paintGraph;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
