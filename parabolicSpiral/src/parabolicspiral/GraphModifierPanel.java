@@ -79,13 +79,14 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1200, 100));
         setLayout(new java.awt.GridBagLayout());
 
+        constLabel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 24)); // NOI18N
         constLabel.setText("const a:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.weightx = 1.0;
         add(constLabel, gridBagConstraints);
 
         constField.setText("2");
-        constField.setPreferredSize(new java.awt.Dimension(50, 30));
+        constField.setPreferredSize(new java.awt.Dimension(50, 40));
         constField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 constFieldFocusLost(evt);
@@ -96,15 +97,18 @@ public class GraphModifierPanel extends javax.swing.JPanel {
                 constFieldPropertyChange(evt);
             }
         });
-        add(constField, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        add(constField, gridBagConstraints);
 
+        fiMinLabel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 24)); // NOI18N
         fiMinLabel.setText("fi min: PI *");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.weightx = 1.0;
         add(fiMinLabel, gridBagConstraints);
 
         fiMinField.setText("0");
-        fiMinField.setPreferredSize(new java.awt.Dimension(50, 30));
+        fiMinField.setPreferredSize(new java.awt.Dimension(50, 40));
         fiMinField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 fiMinFieldFocusLost(evt);
@@ -112,13 +116,14 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         });
         add(fiMinField, new java.awt.GridBagConstraints());
 
+        fiMaxLabel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 24)); // NOI18N
         fiMaxLabel.setText("fi max: PI *");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.weightx = 1.0;
         add(fiMaxLabel, gridBagConstraints);
 
         fiMaxField.setText("4");
-        fiMaxField.setPreferredSize(new java.awt.Dimension(50, 30));
+        fiMaxField.setPreferredSize(new java.awt.Dimension(50, 40));
         fiMaxField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 fiMaxFieldFocusLost(evt);
@@ -126,29 +131,34 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         });
         add(fiMaxField, new java.awt.GridBagConstraints());
 
+        rangeXLabel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 24)); // NOI18N
         rangeXLabel.setText("range x:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.weightx = 1.0;
         add(rangeXLabel, gridBagConstraints);
 
         rangeXSpinner.setModel(new javax.swing.SpinnerNumberModel(450, 0, 450, 1));
+        rangeXSpinner.setPreferredSize(new java.awt.Dimension(56, 40));
         add(rangeXSpinner, new java.awt.GridBagConstraints());
 
+        rangeYLabel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 24)); // NOI18N
         rangeYLabel.setText("range y:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.weightx = 1.0;
         add(rangeYLabel, gridBagConstraints);
 
         rangeYSpinner.setModel(new javax.swing.SpinnerNumberModel(250, 0, 250, 1));
+        rangeYSpinner.setPreferredSize(new java.awt.Dimension(56, 40));
         add(rangeYSpinner, new java.awt.GridBagConstraints());
 
+        stepLabel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 24)); // NOI18N
         stepLabel.setText("step:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.weightx = 1.0;
         add(stepLabel, gridBagConstraints);
 
         stepField.setText("1");
-        stepField.setPreferredSize(new java.awt.Dimension(50, 30));
+        stepField.setPreferredSize(new java.awt.Dimension(50, 40));
         stepField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 stepFieldFocusLost(evt);
@@ -156,22 +166,23 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         });
         add(stepField, new java.awt.GridBagConstraints());
 
+        drawGraphButton.setFont(new java.awt.Font("Microsoft JhengHei Light", 0, 24)); // NOI18N
         drawGraphButton.setText("Draw");
-        drawGraphButton.setPreferredSize(new java.awt.Dimension(150, 100));
+        drawGraphButton.setPreferredSize(new java.awt.Dimension(150, 80));
         drawGraphButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 drawGraphButtonMouseReleased(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.weightx = 5.0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(drawGraphButton, gridBagConstraints);
 
+        saveButton.setFont(new java.awt.Font("Microsoft JhengHei Light", 0, 24)); // NOI18N
         saveButton.setText("Save");
         saveButton.setMaximumSize(new java.awt.Dimension(150, 100));
         saveButton.setMinimumSize(new java.awt.Dimension(150, 100));
-        saveButton.setPreferredSize(new java.awt.Dimension(150, 100));
+        saveButton.setPreferredSize(new java.awt.Dimension(150, 80));
         saveButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 saveButtonMouseReleased(evt);

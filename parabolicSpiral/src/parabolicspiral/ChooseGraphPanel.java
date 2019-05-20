@@ -46,6 +46,7 @@ public class ChooseGraphPanel extends javax.swing.JPanel {
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
+        positiveGraphRButton.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 13)); // NOI18N
         positiveGraphRButton.setForeground(new java.awt.Color(0, 0, 255));
         positiveGraphRButton.setSelected(true);
         positiveGraphRButton.setText("+positive graph");
@@ -60,6 +61,7 @@ public class ChooseGraphPanel extends javax.swing.JPanel {
         });
         add(positiveGraphRButton);
 
+        negativeGraphRButton.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 13)); // NOI18N
         negativeGraphRButton.setForeground(new java.awt.Color(204, 0, 0));
         negativeGraphRButton.setSelected(true);
         negativeGraphRButton.setText("-negative graph");
