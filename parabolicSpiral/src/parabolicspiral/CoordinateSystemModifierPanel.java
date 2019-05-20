@@ -9,19 +9,19 @@ import javax.swing.JSlider;
 
 /**
  *
- * @author VADIM
+ * @author VADYM NAKYTNIAK
  */
 public class CoordinateSystemModifierPanel extends javax.swing.JPanel {
 
     ParabolicSpiralFrame frame;
-    
+
     /**
      * Creates new form CoordinateSystemModifierPanel
      */
     public CoordinateSystemModifierPanel(ParabolicSpiralFrame frame) {
         this.frame = frame;
         initComponents();
-        this.setSize(300,680);
+        this.setSize(300, 680);
     }
 
     /**
@@ -78,7 +78,7 @@ public class CoordinateSystemModifierPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_scaleSliderStateChanged
 
     private void formMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_formMouseWheelMoved
-        scaleSlider.setValue(scaleSlider.getValue()+(int)evt.getPreciseWheelRotation());
+        scaleSlider.setValue(scaleSlider.getValue() + (int) evt.getPreciseWheelRotation());
     }//GEN-LAST:event_formMouseWheelMoved
 
     public JSlider getScaleSlider() {

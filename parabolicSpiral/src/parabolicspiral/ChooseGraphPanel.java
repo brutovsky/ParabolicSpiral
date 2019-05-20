@@ -9,7 +9,7 @@ import javax.swing.JRadioButton;
 
 /**
  *
- * @author VADIM
+ * @author VADYM NAKYTNIAK
  */
 public class ChooseGraphPanel extends javax.swing.JPanel {
 
@@ -22,14 +22,6 @@ public class ChooseGraphPanel extends javax.swing.JPanel {
         this.frame = frame;
         initComponents();
         this.setSize(900, 25);
-    }
-
-    public JRadioButton getNegativeGraphRButton() {
-        return negativeGraphRButton;
-    }
-
-    public JRadioButton getPositiveGraphRButton() {
-        return positiveGraphRButton;
     }
 
     /**
@@ -93,6 +85,13 @@ public class ChooseGraphPanel extends javax.swing.JPanel {
         frame.repaintGraph();
     }//GEN-LAST:event_negativeGraphRButtonStateChanged
 
+    public JRadioButton getNegativeGraphRButton() {
+        return negativeGraphRButton;
+    }
+
+    public JRadioButton getPositiveGraphRButton() {
+        return positiveGraphRButton;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton negativeGraphRButton;

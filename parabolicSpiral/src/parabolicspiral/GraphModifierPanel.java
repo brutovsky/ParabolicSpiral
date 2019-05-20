@@ -6,42 +6,29 @@
 package parabolicspiral;
 
 import java.awt.Component;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Robot;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.text.DecimalFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
-import javax.swing.InputVerifier;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.text.DefaultFormatterFactory;
 
 /**
  *
- * @author VADIM
+ * @author VADYM NAKYTNIAK
  */
 public class GraphModifierPanel extends javax.swing.JPanel {
 
     ParabolicSpiralFrame frame;
-    static public String REGEX_DOUBLE = new String("[-]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?");
-    static public String REGEX_POSITIVE_DOUBLE = new String("[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?");
+    static final public String REGEX_DOUBLE = new String("[-]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?");
+    static final public String REGEX_POSITIVE_DOUBLE = new String("[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?");
 
     /**
      * Creates new form GraphModifierPanel
+     * @param frame
      */
     public GraphModifierPanel(ParabolicSpiralFrame frame) {
         initComponents();
@@ -90,11 +77,6 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         constField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 constFieldFocusLost(evt);
-            }
-        });
-        constField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                constFieldPropertyChange(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -168,6 +150,8 @@ public class GraphModifierPanel extends javax.swing.JPanel {
 
         drawGraphButton.setFont(new java.awt.Font("Microsoft JhengHei Light", 0, 24)); // NOI18N
         drawGraphButton.setText("Draw");
+        drawGraphButton.setMaximumSize(new java.awt.Dimension(150, 80));
+        drawGraphButton.setMinimumSize(new java.awt.Dimension(150, 80));
         drawGraphButton.setPreferredSize(new java.awt.Dimension(150, 80));
         drawGraphButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -180,8 +164,8 @@ public class GraphModifierPanel extends javax.swing.JPanel {
 
         saveButton.setFont(new java.awt.Font("Microsoft JhengHei Light", 0, 24)); // NOI18N
         saveButton.setText("Save");
-        saveButton.setMaximumSize(new java.awt.Dimension(150, 100));
-        saveButton.setMinimumSize(new java.awt.Dimension(150, 100));
+        saveButton.setMaximumSize(new java.awt.Dimension(150, 80));
+        saveButton.setMinimumSize(new java.awt.Dimension(150, 80));
         saveButton.setPreferredSize(new java.awt.Dimension(150, 80));
         saveButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -217,13 +201,9 @@ public class GraphModifierPanel extends javax.swing.JPanel {
             }
             ImageIO.write(bImage, "png", file);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_saveButtonMouseReleased
-
-    private void constFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_constFieldPropertyChange
-
-    }//GEN-LAST:event_constFieldPropertyChange
 
     private void constFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_constFieldFocusLost
         if (constField.getText().matches(REGEX_POSITIVE_DOUBLE)) {
@@ -248,12 +228,12 @@ public class GraphModifierPanel extends javax.swing.JPanel {
     private void fiMaxFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fiMaxFieldFocusLost
         if (fiMaxField.getText().matches(REGEX_POSITIVE_DOUBLE)) {
         } else {
-            Double newValue = new Double(Double.parseDouble(fiMinField.getText()) + 4);
+            Double newValue = Double.parseDouble(fiMinField.getText()) + 4;
             fiMaxField.setText(newValue.toString());
             JOptionPane.showMessageDialog(null, "Enter valid value. Fi max changed to " + newValue.toString() + ".", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
         }
         if (Double.parseDouble(fiMaxField.getText()) <= Double.parseDouble(fiMinField.getText())) {
-            Double newValue = new Double(Double.parseDouble(fiMinField.getText()) + 4);
+            Double newValue = Double.parseDouble(fiMinField.getText()) + 4;
             fiMaxField.setText(newValue.toString());
             JOptionPane.showMessageDialog(null, "Enter value bigger than minimal fi. Fi max changed to " + newValue.toString() + ".", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
         }
@@ -319,6 +299,9 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         return stepLabel;
     }
 
+    /*
+    Takes the picture of the panel and returns BufferedImage
+     */
     public static BufferedImage getScreenComponent(Component component) {
         BufferedImage image = new BufferedImage(
                 component.getWidth(),

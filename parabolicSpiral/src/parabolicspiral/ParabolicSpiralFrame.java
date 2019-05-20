@@ -7,39 +7,34 @@ package parabolicspiral;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JOptionPane;
 
 /**
  *
- * @author VADIM
+ * @author VADYM NAKYTNIAK
  */
 public class ParabolicSpiralFrame extends javax.swing.JFrame {
 
-    private PaintGraphPanel paintGraph; // class that draws the graph
-    private ChooseGraphPanel chooseGraph; // class for radioButtons to choose the graph
-    private GraphModifierPanel modifyGraph; // class for modifying the graph
-    private CoordinateSystemModifierPanel coordinateModifier; // class for modifying the coordinate system
+    private final PaintGraphPanel paintGraph; // panel that draws the graph
+    private final ChooseGraphPanel chooseGraph; // panel for radioButtons to choose the graph
+    private final GraphModifierPanel modifyGraph; // panel for modifying the graph
+    private final CoordinateSystemModifierPanel coordinateModifier; // panel for modifying the coordinate system
 
     /**
      * Creates new form ParabolicSpiralFrame
      */
     public ParabolicSpiralFrame() {
         initComponents();
+        //All panels are created
         chooseGraph = new ChooseGraphPanel(this);
         modifyGraph = new GraphModifierPanel(this);
         coordinateModifier = new CoordinateSystemModifierPanel(this);
         paintGraph = new PaintGraphPanel(chooseGraph, modifyGraph, coordinateModifier);
+        //Panels are added to the form
         paintGraph.setBackground(Color.white);
         add(chooseGraph, BorderLayout.NORTH);
         add(paintGraph, BorderLayout.CENTER);
         add(coordinateModifier, BorderLayout.EAST);
         add(modifyGraph, BorderLayout.SOUTH);
-
-        /*
-        this.add(chooseGraph);
-        this.add(paintGraph);
-        this.add(modifyGraph);
-         */
     }
 
     /**
@@ -103,6 +98,18 @@ public class ParabolicSpiralFrame extends javax.swing.JFrame {
 
     public PaintGraphPanel getPaintGraph() {
         return paintGraph;
+    }
+
+    public ChooseGraphPanel getChooseGraph() {
+        return chooseGraph;
+    }
+
+    public GraphModifierPanel getModifyGraph() {
+        return modifyGraph;
+    }
+
+    public CoordinateSystemModifierPanel getCoordinateModifier() {
+        return coordinateModifier;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
