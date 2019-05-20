@@ -200,9 +200,11 @@ public class GraphModifierPanel extends javax.swing.JPanel {
     private void saveButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseReleased
         BufferedImage bImage = getScreenComponent(frame.getPaintGraph());
         try {
-            String name = JOptionPane.showInputDialog(null,"Enter the name of the file where the picture of the graph will be saved","New Graph");
-            if(name == null)return;
-            File file = new File(System.getProperty("user.dir") + "/graphPictures/" +name+".png");
+            String name = JOptionPane.showInputDialog(null, "Enter the name of the file where the picture of the graph will be saved", "New Graph");
+            if (name == null) {
+                return;
+            }
+            File file = new File(System.getProperty("user.dir") + "/graphPictures/" + name + ".png");
             if (file.exists()) {
                 int res = JOptionPane.showConfirmDialog(null, "Are you sure you want to overwrite " + file.getName() + "?", "Overwrite ?", JOptionPane.YES_NO_CANCEL_OPTION);
                 if (res == JOptionPane.YES_OPTION) {
@@ -237,7 +239,7 @@ public class GraphModifierPanel extends javax.swing.JPanel {
             fiMinField.setText("0");
             JOptionPane.showMessageDialog(null, "Enter valid value. Fi min changed to 0.", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
         }
-        if(Double.parseDouble(fiMinField.getText()) >= Double.parseDouble(fiMaxField.getText())){
+        if (Double.parseDouble(fiMinField.getText()) >= Double.parseDouble(fiMaxField.getText())) {
             fiMinField.setText("0");
             JOptionPane.showMessageDialog(null, "Enter value smaller than maximum fi. Fi min changed to 0.", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
         }
@@ -246,12 +248,14 @@ public class GraphModifierPanel extends javax.swing.JPanel {
     private void fiMaxFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fiMaxFieldFocusLost
         if (fiMaxField.getText().matches(REGEX_POSITIVE_DOUBLE)) {
         } else {
-            fiMaxField.setText("4");
-            JOptionPane.showMessageDialog(null, "Enter valid value. Fi max changed to 4.", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
+            Double newValue = new Double(Double.parseDouble(fiMinField.getText()) + 4);
+            fiMaxField.setText(newValue.toString());
+            JOptionPane.showMessageDialog(null, "Enter valid value. Fi max changed to " + newValue.toString() + ".", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
         }
-        if(Double.parseDouble(fiMaxField.getText()) <= Double.parseDouble(fiMinField.getText())){
-            fiMaxField.setText("4");
-            JOptionPane.showMessageDialog(null, "Enter value bigger than minimal fi. Fi max changed to 4.", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
+        if (Double.parseDouble(fiMaxField.getText()) <= Double.parseDouble(fiMinField.getText())) {
+            Double newValue = new Double(Double.parseDouble(fiMinField.getText()) + 4);
+            fiMaxField.setText(newValue.toString());
+            JOptionPane.showMessageDialog(null, "Enter value bigger than minimal fi. Fi max changed to " + newValue.toString() + ".", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_fiMaxFieldFocusLost
 
