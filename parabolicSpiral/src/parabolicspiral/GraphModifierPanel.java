@@ -28,6 +28,7 @@ public class GraphModifierPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form GraphModifierPanel
+     *
      * @param frame
      */
     public GraphModifierPanel(ParabolicSpiralFrame frame) {
@@ -184,6 +185,10 @@ public class GraphModifierPanel extends javax.swing.JPanel {
     private void saveButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseReleased
         BufferedImage bImage = getScreenComponent(frame.getPaintGraph());
         try {
+            File folder = new File(System.getProperty("user.dir") + "//graphPictures");
+            if (!folder.exists()) {
+                folder.mkdir();
+            }
             String name = JOptionPane.showInputDialog(null, "Enter the name of the file where the picture of the graph will be saved", "New Graph");
             if (name == null) {
                 return;
