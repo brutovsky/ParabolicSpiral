@@ -9,19 +9,19 @@ import javax.swing.JSlider;
 
 /**
  *
- * @author VADIM
+ * @author VADYM NAKYTNIAK
  */
 public class CoordinateSystemModifierPanel extends javax.swing.JPanel {
 
     ParabolicSpiralFrame frame;
-    
+
     /**
      * Creates new form CoordinateSystemModifierPanel
      */
     public CoordinateSystemModifierPanel(ParabolicSpiralFrame frame) {
         this.frame = frame;
         initComponents();
-        this.setSize(300,680);
+        this.setSize(300, 680);
     }
 
     /**
@@ -39,10 +39,23 @@ public class CoordinateSystemModifierPanel extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(300, 680));
         setMinimumSize(new java.awt.Dimension(300, 680));
         setPreferredSize(new java.awt.Dimension(300, 680));
+        addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                formMouseWheelMoved(evt);
+            }
+        });
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
+        scaleLabel.setFont(new java.awt.Font("Microsoft JhengHei Light", 0, 36)); // NOI18N
+        scaleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         scaleLabel.setText("Scale:");
+        scaleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        scaleLabel.setMaximumSize(new java.awt.Dimension(136, 49));
+        scaleLabel.setMinimumSize(new java.awt.Dimension(136, 49));
+        scaleLabel.setPreferredSize(new java.awt.Dimension(136, 49));
         add(scaleLabel);
 
+        scaleSlider.setFont(new java.awt.Font("Microsoft JhengHei Light", 0, 14)); // NOI18N
         scaleSlider.setMajorTickSpacing(30);
         scaleSlider.setMaximum(400);
         scaleSlider.setMinimum(10);
@@ -51,7 +64,7 @@ public class CoordinateSystemModifierPanel extends javax.swing.JPanel {
         scaleSlider.setPaintLabels(true);
         scaleSlider.setPaintTicks(true);
         scaleSlider.setValue(100);
-        scaleSlider.setPreferredSize(new java.awt.Dimension(58, 475));
+        scaleSlider.setPreferredSize(new java.awt.Dimension(100, 475));
         scaleSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 scaleSliderStateChanged(evt);
@@ -63,6 +76,10 @@ public class CoordinateSystemModifierPanel extends javax.swing.JPanel {
     private void scaleSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_scaleSliderStateChanged
         frame.repaintGraph();
     }//GEN-LAST:event_scaleSliderStateChanged
+
+    private void formMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_formMouseWheelMoved
+        scaleSlider.setValue(scaleSlider.getValue() + (int) evt.getPreciseWheelRotation());
+    }//GEN-LAST:event_formMouseWheelMoved
 
     public JSlider getScaleSlider() {
         return scaleSlider;

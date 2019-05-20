@@ -9,7 +9,7 @@ import javax.swing.JRadioButton;
 
 /**
  *
- * @author VADIM
+ * @author VADYM NAKYTNIAK
  */
 public class ChooseGraphPanel extends javax.swing.JPanel {
 
@@ -22,14 +22,6 @@ public class ChooseGraphPanel extends javax.swing.JPanel {
         this.frame = frame;
         initComponents();
         this.setSize(900, 25);
-    }
-
-    public JRadioButton getNegativeGraphRButton() {
-        return negativeGraphRButton;
-    }
-
-    public JRadioButton getPositiveGraphRButton() {
-        return positiveGraphRButton;
     }
 
     /**
@@ -46,6 +38,7 @@ public class ChooseGraphPanel extends javax.swing.JPanel {
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
+        positiveGraphRButton.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 13)); // NOI18N
         positiveGraphRButton.setForeground(new java.awt.Color(0, 0, 255));
         positiveGraphRButton.setSelected(true);
         positiveGraphRButton.setText("+positive graph");
@@ -60,7 +53,9 @@ public class ChooseGraphPanel extends javax.swing.JPanel {
         });
         add(positiveGraphRButton);
 
+        negativeGraphRButton.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 13)); // NOI18N
         negativeGraphRButton.setForeground(new java.awt.Color(204, 0, 0));
+        negativeGraphRButton.setSelected(true);
         negativeGraphRButton.setText("-negative graph");
         negativeGraphRButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         negativeGraphRButton.setMaximumSize(new java.awt.Dimension(450, 25));
@@ -90,6 +85,13 @@ public class ChooseGraphPanel extends javax.swing.JPanel {
         frame.repaintGraph();
     }//GEN-LAST:event_negativeGraphRButtonStateChanged
 
+    public JRadioButton getNegativeGraphRButton() {
+        return negativeGraphRButton;
+    }
+
+    public JRadioButton getPositiveGraphRButton() {
+        return positiveGraphRButton;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton negativeGraphRButton;

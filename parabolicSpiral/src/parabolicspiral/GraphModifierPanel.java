@@ -5,33 +5,30 @@
  */
 package parabolicspiral;
 
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.image.RenderedImage;
+import java.awt.Component;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.text.DecimalFormat;
+import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.InputVerifier;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.text.DefaultFormatterFactory;
 
 /**
  *
- * @author VADIM
+ * @author VADYM NAKYTNIAK
  */
 public class GraphModifierPanel extends javax.swing.JPanel {
 
     ParabolicSpiralFrame frame;
+    static final public String REGEX_DOUBLE = new String("[-]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?");
+    static final public String REGEX_POSITIVE_DOUBLE = new String("[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?");
 
     /**
      * Creates new form GraphModifierPanel
+     * @param frame
      */
     public GraphModifierPanel(ParabolicSpiralFrame frame) {
         initComponents();
@@ -52,15 +49,15 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         constLabel = new javax.swing.JLabel();
         constField = new javax.swing.JTextField();
         fiMinLabel = new javax.swing.JLabel();
-        fiMinField = new javax.swing.JFormattedTextField();
+        fiMinField = new javax.swing.JTextField();
         fiMaxLabel = new javax.swing.JLabel();
-        fiMaxField = new javax.swing.JFormattedTextField();
+        fiMaxField = new javax.swing.JTextField();
         rangeXLabel = new javax.swing.JLabel();
         rangeXSpinner = new javax.swing.JSpinner();
         rangeYLabel = new javax.swing.JLabel();
         rangeYSpinner = new javax.swing.JSpinner();
         stepLabel = new javax.swing.JLabel();
-        stepField = new javax.swing.JFormattedTextField();
+        stepField = new javax.swing.JTextField();
         drawGraphButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
 
@@ -69,79 +66,107 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1200, 100));
         setLayout(new java.awt.GridBagLayout());
 
+        constLabel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 24)); // NOI18N
         constLabel.setText("const a:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.weightx = 1.0;
         add(constLabel, gridBagConstraints);
 
         constField.setText("2");
-        constField.setPreferredSize(new java.awt.Dimension(50, 30));
-        add(constField, new java.awt.GridBagConstraints());
+        constField.setPreferredSize(new java.awt.Dimension(50, 40));
+        constField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                constFieldFocusLost(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        add(constField, gridBagConstraints);
 
+        fiMinLabel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 24)); // NOI18N
         fiMinLabel.setText("fi min: PI *");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.weightx = 1.0;
         add(fiMinLabel, gridBagConstraints);
 
-        fiMinField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         fiMinField.setText("0");
-        fiMinField.setMinimumSize(new java.awt.Dimension(50, 22));
-        fiMinField.setPreferredSize(new java.awt.Dimension(50, 30));
+        fiMinField.setPreferredSize(new java.awt.Dimension(50, 40));
+        fiMinField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fiMinFieldFocusLost(evt);
+            }
+        });
         add(fiMinField, new java.awt.GridBagConstraints());
 
+        fiMaxLabel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 24)); // NOI18N
         fiMaxLabel.setText("fi max: PI *");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.weightx = 1.0;
         add(fiMaxLabel, gridBagConstraints);
 
-        fiMaxField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         fiMaxField.setText("4");
-        fiMaxField.setMinimumSize(new java.awt.Dimension(50, 22));
-        fiMaxField.setPreferredSize(new java.awt.Dimension(50, 30));
+        fiMaxField.setPreferredSize(new java.awt.Dimension(50, 40));
+        fiMaxField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fiMaxFieldFocusLost(evt);
+            }
+        });
         add(fiMaxField, new java.awt.GridBagConstraints());
 
+        rangeXLabel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 24)); // NOI18N
         rangeXLabel.setText("range x:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.weightx = 1.0;
         add(rangeXLabel, gridBagConstraints);
 
         rangeXSpinner.setModel(new javax.swing.SpinnerNumberModel(450, 0, 450, 1));
+        rangeXSpinner.setPreferredSize(new java.awt.Dimension(56, 40));
         add(rangeXSpinner, new java.awt.GridBagConstraints());
 
+        rangeYLabel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 24)); // NOI18N
         rangeYLabel.setText("range y:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.weightx = 1.0;
         add(rangeYLabel, gridBagConstraints);
 
         rangeYSpinner.setModel(new javax.swing.SpinnerNumberModel(250, 0, 250, 1));
+        rangeYSpinner.setPreferredSize(new java.awt.Dimension(56, 40));
         add(rangeYSpinner, new java.awt.GridBagConstraints());
 
+        stepLabel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 24)); // NOI18N
         stepLabel.setText("step:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.weightx = 1.0;
         add(stepLabel, gridBagConstraints);
 
-        stepField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         stepField.setText("1");
-        stepField.setPreferredSize(new java.awt.Dimension(50, 30));
+        stepField.setPreferredSize(new java.awt.Dimension(50, 40));
+        stepField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                stepFieldFocusLost(evt);
+            }
+        });
         add(stepField, new java.awt.GridBagConstraints());
 
+        drawGraphButton.setFont(new java.awt.Font("Microsoft JhengHei Light", 0, 24)); // NOI18N
         drawGraphButton.setText("Draw");
-        drawGraphButton.setPreferredSize(new java.awt.Dimension(150, 100));
+        drawGraphButton.setMaximumSize(new java.awt.Dimension(150, 80));
+        drawGraphButton.setMinimumSize(new java.awt.Dimension(150, 80));
+        drawGraphButton.setPreferredSize(new java.awt.Dimension(150, 80));
         drawGraphButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 drawGraphButtonMouseReleased(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.weightx = 5.0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(drawGraphButton, gridBagConstraints);
 
+        saveButton.setFont(new java.awt.Font("Microsoft JhengHei Light", 0, 24)); // NOI18N
         saveButton.setText("Save");
-        saveButton.setMaximumSize(new java.awt.Dimension(150, 100));
-        saveButton.setMinimumSize(new java.awt.Dimension(150, 100));
-        saveButton.setPreferredSize(new java.awt.Dimension(150, 100));
+        saveButton.setMaximumSize(new java.awt.Dimension(150, 80));
+        saveButton.setMinimumSize(new java.awt.Dimension(150, 80));
+        saveButton.setPreferredSize(new java.awt.Dimension(150, 80));
         saveButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 saveButtonMouseReleased(evt);
@@ -157,17 +182,70 @@ public class GraphModifierPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_drawGraphButtonMouseReleased
 
     private void saveButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseReleased
+        BufferedImage bImage = getScreenComponent(frame.getPaintGraph());
         try {
-            Robot robot = new Robot();
-            Rectangle componentRectangle = new Rectangle(5, 58, 890, 470);
-            RenderedImage componentImage = robot.createScreenCapture(componentRectangle);
-            File file = new  File("hello"+".png");
-            file.createNewFile();
-            ImageIO.write(componentImage, "png", file);
-        } catch (Exception e) {
-            e.printStackTrace();
+            String name = JOptionPane.showInputDialog(null, "Enter the name of the file where the picture of the graph will be saved", "New Graph");
+            if (name == null) {
+                return;
+            }
+            File file = new File(System.getProperty("user.dir") + "/graphPictures/" + name + ".png");
+            if (file.exists()) {
+                int res = JOptionPane.showConfirmDialog(null, "Are you sure you want to overwrite " + file.getName() + "?", "Overwrite ?", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (res == JOptionPane.YES_OPTION) {
+                    file.createNewFile();
+                } else {
+                    return;
+                }
+            } else {
+                file.createNewFile();
+            }
+            ImageIO.write(bImage, "png", file);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_saveButtonMouseReleased
+
+    private void constFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_constFieldFocusLost
+        if (constField.getText().matches(REGEX_POSITIVE_DOUBLE)) {
+        } else {
+            constField.setText("2");
+            JOptionPane.showMessageDialog(null, "Enter valid value. Const a changed to 2.", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_constFieldFocusLost
+
+    private void fiMinFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fiMinFieldFocusLost
+        if (fiMinField.getText().matches(REGEX_POSITIVE_DOUBLE)) {
+        } else {
+            fiMinField.setText("0");
+            JOptionPane.showMessageDialog(null, "Enter valid value. Fi min changed to 0.", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
+        }
+        if (Double.parseDouble(fiMinField.getText()) >= Double.parseDouble(fiMaxField.getText())) {
+            fiMinField.setText("0");
+            JOptionPane.showMessageDialog(null, "Enter value smaller than maximum fi. Fi min changed to 0.", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_fiMinFieldFocusLost
+
+    private void fiMaxFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fiMaxFieldFocusLost
+        if (fiMaxField.getText().matches(REGEX_POSITIVE_DOUBLE)) {
+        } else {
+            Double newValue = Double.parseDouble(fiMinField.getText()) + 4;
+            fiMaxField.setText(newValue.toString());
+            JOptionPane.showMessageDialog(null, "Enter valid value. Fi max changed to " + newValue.toString() + ".", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
+        }
+        if (Double.parseDouble(fiMaxField.getText()) <= Double.parseDouble(fiMinField.getText())) {
+            Double newValue = Double.parseDouble(fiMinField.getText()) + 4;
+            fiMaxField.setText(newValue.toString());
+            JOptionPane.showMessageDialog(null, "Enter value bigger than minimal fi. Fi max changed to " + newValue.toString() + ".", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_fiMaxFieldFocusLost
+
+    private void stepFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_stepFieldFocusLost
+        if (stepField.getText().matches(REGEX_POSITIVE_DOUBLE)) {
+        } else {
+            stepField.setText("1");
+            JOptionPane.showMessageDialog(null, "Enter valid value. Step changed to 1.", "Invalid value entered", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_stepFieldFocusLost
 
     public JTextField getConstField() {
         return constField;
@@ -181,7 +259,7 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         return drawGraphButton;
     }
 
-    public JFormattedTextField getFiMaxField() {
+    public JTextField getFiMaxField() {
         return fiMaxField;
     }
 
@@ -189,7 +267,7 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         return fiMaxLabel;
     }
 
-    public JFormattedTextField getFiMinField() {
+    public JTextField getFiMinField() {
         return fiMinField;
     }
 
@@ -213,7 +291,7 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         return rangeYSpinner;
     }
 
-    public JFormattedTextField getStepField() {
+    public JTextField getStepField() {
         return stepField;
     }
 
@@ -221,20 +299,32 @@ public class GraphModifierPanel extends javax.swing.JPanel {
         return stepLabel;
     }
 
+    /*
+    Takes the picture of the panel and returns BufferedImage
+     */
+    public static BufferedImage getScreenComponent(Component component) {
+        BufferedImage image = new BufferedImage(
+                component.getWidth(),
+                component.getHeight(),
+                BufferedImage.TYPE_INT_RGB
+        );
+        component.paint(image.getGraphics());
+        return image;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField constField;
     private javax.swing.JLabel constLabel;
     private javax.swing.JButton drawGraphButton;
-    private javax.swing.JFormattedTextField fiMaxField;
+    private javax.swing.JTextField fiMaxField;
     private javax.swing.JLabel fiMaxLabel;
-    private javax.swing.JFormattedTextField fiMinField;
+    private javax.swing.JTextField fiMinField;
     private javax.swing.JLabel fiMinLabel;
     private javax.swing.JLabel rangeXLabel;
     private javax.swing.JSpinner rangeXSpinner;
     private javax.swing.JLabel rangeYLabel;
     private javax.swing.JSpinner rangeYSpinner;
     private javax.swing.JButton saveButton;
-    private javax.swing.JFormattedTextField stepField;
+    private javax.swing.JTextField stepField;
     private javax.swing.JLabel stepLabel;
     // End of variables declaration//GEN-END:variables
 }
