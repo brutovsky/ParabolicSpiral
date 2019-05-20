@@ -200,7 +200,9 @@ public class GraphModifierPanel extends javax.swing.JPanel {
     private void saveButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseReleased
         BufferedImage bImage = getScreenComponent(frame.getPaintGraph());
         try {
-            File file = new File(System.getProperty("user.dir") + "/graphPictures/" + "Graph(a=" + frame.getPaintGraph().getA() / 100 + ";fi=[" + frame.getPaintGraph().getFi_min() / Math.PI + "PI," + frame.getPaintGraph().getFi_max() / Math.PI + "PI])" + ".png");
+            String name = JOptionPane.showInputDialog(null,"Enter the name of the file where the picture of the graph will be saved","New Graph");
+            if(name == null)return;
+            File file = new File(System.getProperty("user.dir") + "/graphPictures/" +name+".png");
             if (file.exists()) {
                 int res = JOptionPane.showConfirmDialog(null, "Are you sure you want to overwrite " + file.getName() + "?", "Overwrite ?", JOptionPane.YES_NO_CANCEL_OPTION);
                 if (res == JOptionPane.YES_OPTION) {
