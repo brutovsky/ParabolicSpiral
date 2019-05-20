@@ -6,9 +6,11 @@
 package parabolicspiral;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
+import sun.java2d.loops.DrawRect;
 
 /**
  *
@@ -54,8 +56,6 @@ public class PaintGraphPanel extends javax.swing.JPanel {
         return fi_max;
     }
 
-    
-    
     /**
      * Creates new form PaintGraphPanel
      */
@@ -84,8 +84,8 @@ public class PaintGraphPanel extends javax.swing.JPanel {
         g.setColor(Color.white);
         g.fillRect(0, 0, lenght_x / 2 - x_range, lenght_y);
         g.fillRect(lenght_x / 2 + x_range, 0, lenght_x / 2, lenght_y);
-        g.fillRect(0, 0, lenght_x+5, lenght_y / 2 - y_range);
-        g.fillRect(0, lenght_y / 2 + y_range, lenght_x+5, lenght_y / 2 - y_range);
+        g.fillRect(0, 0, lenght_x + 5, lenght_y / 2 - y_range);
+        g.fillRect(0, lenght_y / 2 + y_range, lenght_x + 5, lenght_y / 2 - y_range);
         g.setColor(Color.black);
         //–азбиваем каждую ось на две части дл€ удобства переноса центра координат
         // ќсь Y
@@ -174,9 +174,39 @@ public class PaintGraphPanel extends javax.swing.JPanel {
                 g.drawString((new Double(d)).toString(), lx, ly + div_intend);
                 g.setColor(Color.black);
             }
-            //
             l1 = l1 + segmentation;
         }
+        drawFormulas(g);
+        drawSignature(g);
+    }
+
+    private void drawFormulas(Graphics g) {
+        int x_length = 250;
+        int y_length = 160;
+        int start_y = this.getHeight() - y_length;
+        int start_x = 1;
+        int gap = 30;
+        g.drawRect(start_x - 1, start_y, x_length, y_length);
+        Font old_font = g.getFont();
+        Font formulas_font = new Font("Microsoft JhengHei Light",Font.PLAIN,20);
+        g.setFont(formulas_font);
+        g.drawString("FORMULAS", start_x, start_y);
+        g.drawString("r^2 = 2*a*fi", start_x, start_y + gap);
+        g.drawString("x = r*cos(fi)", start_x, start_y + 2*gap);
+        g.drawString("y = r*sin(fi)", start_x, start_y + 3*gap);
+        g.drawString("a = "+modifyPanel.getConstField().getText(), start_x, start_y + 4*gap);
+        g.drawString("fi = ["+modifyPanel.getFiMinField().getText()+"PI,"+modifyPanel.getFiMaxField().getText()+"PI]", start_x, start_y + 5*gap);
+        g.setFont(old_font);
+    }
+    
+    private void drawSignature(Graphics g){
+        Font old_font = g.getFont();
+        Font signature_font = new Font("Microsoft JhengHei Light",Font.PLAIN,20);
+        g.setFont(signature_font);
+        int width = 180;
+        int height = 5;
+        g.drawString("Nakytniak Vadym", getWidth()-width, getHeight()-height);
+        g.setFont(old_font);
     }
 
     public void drawPositiveGraph(Graphics g) {
@@ -263,8 +293,8 @@ public class PaintGraphPanel extends javax.swing.JPanel {
         list_y = new ArrayList<>();
 
         div_intend = 35;
-        x_range = 2*(Integer)modifyPanel.getRangeXSpinner().getValue();
-        y_range = 2*(Integer)modifyPanel.getRangeYSpinner().getValue();
+        x_range = 2 * (Integer) modifyPanel.getRangeXSpinner().getValue();
+        y_range = 2 * (Integer) modifyPanel.getRangeYSpinner().getValue();
     }
 
 
